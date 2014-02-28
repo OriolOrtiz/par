@@ -10,3 +10,16 @@
     }
 
 3.
+    time / num_threads
+    If we use more than 12 threads there is a slight overhead, this happens
+    because the node has 12 cores, and despite it has multithreading (2 threads),
+    and there are threads that are sharing cores.
+
+4.
+    [Attach *.csv]
+    The differences are caused by the number of mutual exclusions:
+    - The 'critical' version performs mutual exclusions in each iteration.
+    - The 'sum_local' version only performs $num_threads$ exclusions to reduce the local sums of each thread.
+
+5.
+    
