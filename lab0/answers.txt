@@ -16,10 +16,10 @@
     and there are threads that are sharing cores.
 
 4.
-    [Attach *.csv]
+    [Attach *_omp_perc.csv]
     The differences are caused by the number of mutual exclusions:
     - The 'critical' version performs mutual exclusions in each iteration.
     - The 'sum_local' version only performs $num_threads$ exclusions to reduce the local sums of each thread.
 
 5.
-    
+    [Attach *_user_times.csv]
