@@ -1,0 +1,150 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage[justification=centering,labelfont=bf]{caption}
+\usepackage{listings}
+\lstset{ % For diff
+  basicstyle={\footnotesize\ttfamily},
+  breakatwhitespace=false,
+  breaklines=true,
+  language=C,
+  frame=single,
+  captionpos=b,
+  extendedchars=true,
+  showspaces=false,
+  showstringspaces=false,
+  escapeinside=||,
+  showtabs=false,
+  tabsize=8,
+  moredelim=**[is][\color{OliveGreen}]{@}{@},
+}
+
+\newcommand{\blueline}[1]{\textcolor{blue}{#1}}
+
+\newcommand{\assignatura}{Paral·lelisme}
+\newcommand{\titol}{First Deliverable}
+
+\newcommand{\Pautor}{Héctor Ramón Jiménez}
+\newcommand{\Sautor}{Alvaro Espuña Buxó}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\newcounter{ProblemCounter}
+\newcommand{\question}{%
+  \setcounter{enumi}{\value{ProblemCounter}}%
+  \stepcounter{ProblemCounter}%
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{center}
+    \textsc{\Large \assignatura}\\[1.5cm]
+    \HRule \\[0.4cm]
+     { \huge \bfseries \titol \\[0.4cm] }
+    \HRule \\[2.5cm]
+    \begin{minipage}{0.4\textwidth}
+      \begin{flushleft}
+        \large \Pautor
+      \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+      \begin{flushright}
+        \large \Sautor
+      \end{flushright}
+    \end{minipage}
+
+    \vfill
+    {\large \today}
+  \end{center}
+\end{titlepage}
+
+\section*{Node architecture and memory}
+\begin{enumerate}
+  \question \item Describe (better if you do a simple drawing) the
+  architecture of the computer in which you are doing this lab session
+  (number of sockets, cores per socket, threads per core, cache
+  hierarchy size and sharing, and amount of main memory).
+\end{enumerate}
+
+\section*{Timing sequential and parallel executions}
+\begin{enumerate}
+  \question \item Indicate the library header where the structure
+  struct timeval is declared and which are its fields.
+
+  \question \item Plot the execution time when varying the number of
+  threads for {\tt pi\_omp.c}. Reason about how the number of threads
+  influence on the execution time.
+\end{enumerate}
+
+\section*{Tracing parallel executions}
+\begin{enumerate}
+  \question \item From the two instrumented {\tt OpenMP} versions
+  ({\tt pi\_omp\_sum\_local.c} and {\tt pi\_omp\_critical.c}), show a
+  profile of the\% of time spent in the different {\tt OpenMP}
+  states. Reason about the differences observed and guess which is the
+  construct in the source code that is the cause of these differences.
+
+  \question \item For the two {\tt OpenMP} versions provided, fill in the
+  following table with the time elapsed in each part of the code and
+  the total elapsed time of the instrumented code (using 8 threads).
+
+  \begin{center}
+    \begin{tabular}{| l || c | c | c |}
+      \cline{2-4}
+      \multicolumn{1}{l ||}{} & REST\_MAIN & PI\_COMPUTATION & TIMING \\
+      \hline\hline
+      pi\_omp\_sum\_local.c & & & \\
+      \hline
+      pi\_omp\_critical.c & & & \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{enumerate}
+
+\section*{Visualizing the task graph and data dependences}
+
+\begin{enumerate}
+  \question \item Include the source code for function {\tt dot\_product}
+  in which you show the instrumentation that has been added in order
+  to identify tasks and filter the analysis of variable(s) that cause
+  the dependence(s).
+
+  \question \item Capture the task dependence graph and execution
+  timeline (for 8 processors) for that task decomposition.
+\end{enumerate}
+
+\section*{Analysis of task decomposition}
+\begin{enumerate}
+  \question \item Complete the following table for the initial and
+  different versions generated for {\tt 3dfft\_seq.c}.
+
+  \begin{center}
+    \begin{tabular}{| c || c | c | c |}
+      \hline
+          {\bf Version} & $T_1$ & $T_{\infty}$ & {\bf Parallelism} \\
+          \hline
+          \hline
+          sqe & & & \\
+          \hline
+          v1 & & & \\
+          \hline
+          v2 & & & \\
+          \hline
+          v3 & & & \\
+          \hline
+          v4 & & & \\
+          \hline
+    \end{tabular}
+  \end{center}
+
+  \question \item  With the results from the parallel simulation with
+  2, 4, 8, 16 and 32 processors, draw the execution time and speedup
+  plots for version {\tt v4} with respect to the sequential execution (that
+  you can estimate from the simulation of the initial task
+  decomposition that we provided in {\tt 3dfft\_seq.c}, using just 1
+  processor).
+\end{enumerate}
+
+\end{document}
