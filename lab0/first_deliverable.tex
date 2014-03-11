@@ -4,6 +4,8 @@
 \usepackage{graphicx}
 \usepackage[justification=centering,labelfont=bf]{caption}
 \usepackage{listings}
+\usepackage{csvsimple}
+\usepackage{booktabs,mathptmx,siunitx}
 \lstset{ % For diff
   basicstyle={\footnotesize\ttfamily},
   breakatwhitespace=false,
@@ -22,7 +24,7 @@
 
 \newcommand{\blueline}[1]{\textcolor{blue}{#1}}
 
-\newcommand{\assignatura}{Paral·lelisme}
+\newcommand{\assignatura}{Parallelism}
 \newcommand{\titol}{First Deliverable}
 
 \newcommand{\Pautor}{Héctor Ramón Jiménez}
@@ -34,6 +36,9 @@
 \newcommand{\question}{%
   \setcounter{enumi}{\value{ProblemCounter}}%
   \stepcounter{ProblemCounter}%
+}
+\newcommand{\answer}[1]{
+  {\bf {#1}}
 }
 
 \begin{document}
@@ -73,18 +78,70 @@
   \question \item Indicate the library header where the structure
   struct timeval is declared and which are its fields.
 
+  \answer{
+    It is defined in \texttt{sys/time.h}. Its fields are:
+    \begin{itemize}
+      \item tv\_sec: Time in seconds
+      \item tv\_usec: Time in microseconds
+    \end{itemize}
+  }
+
   \question \item Plot the execution time when varying the number of
   threads for {\tt pi\_omp.c}. Reason about how the number of threads
   influence on the execution time.
+
+  \begin{figure}[h!]
+    \begin{center}
+    \includegraphics[trim=150 250 150 250, clip, width=0.7\textwidth]{pi_omp/threads.pdf}
+    \caption{Figure showing execution time as function of the
+      number of threads used}
+    \end{center}
+  \end{figure}
+
+  \answer{
+    When using from 1 to 12 threads the execution time follows the formula $\frac{execution\:time\:with\:1\:thread}{number\:of\:threads}$, as expected.
+
+    When more than 12 threads are used there is a slight overhead. This
+    was expected too because, despite that each node supports 2 threads
+    per core, the threads are sharing resources.
+  }
+
 \end{enumerate}
 
 \section*{Tracing parallel executions}
 \begin{enumerate}
   \question \item From the two instrumented {\tt OpenMP} versions
   ({\tt pi\_omp\_sum\_local.c} and {\tt pi\_omp\_critical.c}), show a
-  profile of the\% of time spent in the different {\tt OpenMP}
+  profile of the \% of time spent in the different {\tt OpenMP}
   states. Reason about the differences observed and guess which is the
   construct in the source code that is the cause of these differences.
+
+  \begin{center}
+  \begin{tabular}{| l || S | S |}
+    \cline{2-3}
+    \multicolumn{1}{l ||}{} & \multicolumn{1}{c |}{critical} & \multicolumn{1}{c |}{sum\_local} \\
+    \hline\hline
+    Running & 9.79 & 85.12 \\
+    \hline
+    Not created & 0.01 & 5.40 \\
+    \hline
+    Synchronization & 87.15 & 5.94 \\
+    \hline
+    Scheduling and Fork/Join & 0.26 & 7.89 \\
+    \hline
+    I/O & 3.01 & 2.55 \\
+    \hline
+  \end{tabular}
+  \end{center}
+
+  \answer{
+    The differences are caused by the number of mutual exclusions:
+    \begin{itemize}
+      \item The ``critical'' version performs mutual exclusions in each iteration. Therefore, every thread needs to be synchronized with all the other threads before performing an iteration!
+      \item The ``sum\_local'' version only performs $num\_threads$ exclusions to reduce the local sums of each thread. Thus, this version can perform the most part of the computation without any synchronization with the other threads.
+    \end{itemize}
+
+  }
 
   \question \item For the two {\tt OpenMP} versions provided, fill in the
   following table with the time elapsed in each part of the code and
