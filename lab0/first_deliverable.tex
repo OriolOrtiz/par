@@ -230,6 +230,46 @@
   you can estimate from the simulation of the initial task
   decomposition that we provided in {\tt 3dfft\_seq.c}, using just 1
   processor).
+
+  \begin{center}
+    \begin{tabular}{| c || c | c |}
+      \hline
+          {\bf Processors } & {\bf Time (ms)} & {\bf Speedup} \\
+          \hline
+          \hline
+          1 & 1073.956 & 1 \\
+          \hline
+          2 & 546.488 & 1.965 \\
+          \hline
+          4 & 403.891 & 2.659 \\
+          \hline
+          8 & 350.956 & 3.060 \\
+          \hline
+          16 & 322.078 & 3.334 \\
+          \hline
+          32 & 322.078 & 3.334 \\
+          \hline
+    \end{tabular}
+  \end{center}
+
+  \begin{figure}[!h]
+    \begin{center}
+    \includegraphics[width=0.85\textwidth]{3dfft/processors_time_ms.pdf}
+    \caption{Figure showing the execution timeline as function of the
+      number of cores used.}
+    \end{center}
+  \end{figure}
+
+  \begin{figure}[!h]
+    \begin{center}
+      \includegraphics[width=0.85\textwidth]{3dfft/processors_speedup.pdf}
+    \caption{Figure showing the speedup as function of the number of
+      cores used. We can see that the theoretical limit is almost
+      reached.}
+    \end{center}
+  \end{figure}
+
+
 \end{enumerate}
 
 \end{document}
