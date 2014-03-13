@@ -173,8 +173,31 @@
   to identify tasks and filter the analysis of variable(s) that cause
   the dependence(s).
 
+  \answer{See attached file: \texttt{dot\_product.c}}
+
   \question \item Capture the task dependence graph and execution
   timeline (for 8 processors) for that task decomposition.
+
+  \begin{figure}[h!]
+    \begin{center}
+    \includegraphics[width=1\textwidth]{dot_product/dependency_graph.pdf}
+    \caption{Figure showing the while task dependency graph of \texttt{dot\_product.c}}
+    \end{center}
+  \end{figure}
+  
+  \begin{figure}[h!]
+    \begin{center}
+    \includegraphics[trim=3300 0 3300 600, clip,width=1\textwidth]{dot_product/dependency_graph.pdf}
+    \caption{Figure zooming the center section of the task dependency graph of \texttt{dot\_product.c}}
+    \end{center}
+  \end{figure}
+
+  \begin{figure}[h!]
+    \begin{center}
+    \includegraphics[width=1\textwidth]{dot_product/execution_graph_8_cores.png}
+    \caption{Figure showing the execution timeline of \texttt{dot\_product.c} with 8 processors}
+    \end{center}
+  \end{figure}
 \end{enumerate}
 
 \section*{Analysis of task decomposition}
