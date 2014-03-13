@@ -135,7 +135,7 @@
   \end{center}
 
   \answer{
-    The differences are caused by the number of mutual exclusions:
+    The differences are caused by the moment where the mutual exclusions are performed:
     \begin{itemize}
       \item The ``critical'' version performs mutual exclusions in each iteration. Therefore, every thread needs to be synchronized with all the other threads before performing an iteration!
       \item The ``sum\_local'' version only performs $num\_threads$ exclusions to reduce the local sums of each thread. Thus, this version can perform the most part of the computation without any synchronization with the other threads.
@@ -148,16 +148,21 @@
   the total elapsed time of the instrumented code (using 8 threads).
 
   \begin{center}
-    \begin{tabular}{| l || c | c | c |}
-      \cline{2-4}
-      \multicolumn{1}{l ||}{} & REST\_MAIN & PI\_COMPUTATION & TIMING \\
+    \begin{tabular}{| l || S | S | S | S |}
+      \cline{2-5}
+      \multicolumn{1}{l ||}{} & \multicolumn{1}{c |}{REST\_MAIN} & \multicolumn{1}{c |}{PI\_COMPUTATION} & \multicolumn{1}{c |}{TIMING} & \multicolumn{1}{c |}{Total}\\
       \hline\hline
-      pi\_omp\_sum\_local.c & & & \\
+      critical & 5540.00 & 101118642.50 & 24749.00 & 132382580.88 \\
       \hline
-      pi\_omp\_critical.c & & & \\
+      sum\_local & 5268.00 & 190077.88 & 16061.00 & 3767231.88 \\
+      \hline
+      \hline
+      \textbf{SPEEDUP} & 1.05 & 531.98 & 1.54 & 35.14 \\
       \hline
     \end{tabular}
   \end{center}
+
+  \answer{It is clear that the PI\_COMPUTATION has been performed faster in the sum\_local version, avoiding the synchronization in each iteration and obtaining a huge speedup.}
 \end{enumerate}
 
 \section*{Visualizing the task graph and data dependences}
