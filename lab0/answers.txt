@@ -1,5 +1,7 @@
 1.
-    
+    2 sockets
+    6 cores per socket
+    2 threads per core
 
 2.
     sys/time.h

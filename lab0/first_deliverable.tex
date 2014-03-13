@@ -6,21 +6,7 @@
 \usepackage{listings}
 \usepackage{csvsimple}
 \usepackage{booktabs,mathptmx,siunitx}
-\lstset{ % For diff
-  basicstyle={\footnotesize\ttfamily},
-  breakatwhitespace=false,
-  breaklines=true,
-  language=C,
-  frame=single,
-  captionpos=b,
-  extendedchars=true,
-  showspaces=false,
-  showstringspaces=false,
-  escapeinside=||,
-  showtabs=false,
-  tabsize=8,
-  moredelim=**[is][\color{OliveGreen}]{@}{@},
-}
+\usepackage{minted}
 
 \newcommand{\blueline}[1]{\textcolor{blue}{#1}}
 
@@ -71,6 +57,20 @@
   architecture of the computer in which you are doing this lab session
   (number of sockets, cores per socket, threads per core, cache
   hierarchy size and sharing, and amount of main memory).
+  
+  \answer{
+    \begin{itemize}
+      \item 2 sockets
+      \item 6 cores per socket
+      \item 2 threads per core
+      \item 3 cache levels: L1, L2 and L3
+      \begin{itemize}
+        \item L1 (32 KBytes) and L2 (256 KBytes) private per core
+        \item L3 (12 MBytes) shared between cores of the same socket
+      \end{itemize}
+      \item Main memory (23.49 GBytes)
+    \end{itemize}
+  }
 \end{enumerate}
 
 \section*{Timing sequential and parallel executions}
@@ -86,28 +86,31 @@
     \end{itemize}
   }
 
+\clearpage
   \question \item Plot the execution time when varying the number of
   threads for {\tt pi\_omp.c}. Reason about how the number of threads
   influence on the execution time.
 
   \begin{figure}[h!]
     \begin{center}
-    \includegraphics[trim=150 250 150 250, clip, width=0.7\textwidth]{pi_omp/threads.pdf}
+    \includegraphics[trim=150 250 150 250, clip, width=1\textwidth]{pi_omp/threads.pdf}
     \caption{Figure showing execution time as function of the
       number of threads used}
+    \label{pi-threads}
     \end{center}
   \end{figure}
 
   \answer{
     When using from 1 to 12 threads the execution time follows the formula $\frac{execution\:time\:with\:1\:thread}{number\:of\:threads}$, as expected.
 
-    When more than 12 threads are used there is a slight overhead. This
-    was expected too because, despite that each node supports 2 threads
-    per core, the threads are sharing resources.
+    When more than 12 threads are used there is a slight overhead. Again, this
+    was expected because, despite that 2 threads per core are supported,
+    the threads in a core share some resources (like the two first-level caches).
   }
 
 \end{enumerate}
 
+\clearpage
 \section*{Tracing parallel executions}
 \begin{enumerate}
   \question \item From the two instrumented {\tt OpenMP} versions
@@ -165,16 +168,17 @@
   \answer{It is clear that the PI\_COMPUTATION has been performed faster in the sum\_local version, avoiding the synchronization in each iteration and obtaining a huge speedup.}
 \end{enumerate}
 
+\clearpage
 \section*{Visualizing the task graph and data dependences}
-
 \begin{enumerate}
   \question \item Include the source code for function {\tt dot\_product}
   in which you show the instrumentation that has been added in order
   to identify tasks and filter the analysis of variable(s) that cause
   the dependence(s).
 
-  \answer{See attached file: \texttt{dot\_product.c}}
+  \inputminted{c}{dot_product/dot_product.c}
 
+  \clearpage
   \question \item Capture the task dependence graph and execution
   timeline (for 8 processors) for that task decomposition.
 
@@ -200,6 +204,7 @@
   \end{figure}
 \end{enumerate}
 
+\clearpage
 \section*{Analysis of task decomposition}
 \begin{enumerate}
   \question \item Complete the following table for the initial and
@@ -268,7 +273,6 @@
       reached.}
     \end{center}
   \end{figure}
-
 
 \end{enumerate}
 

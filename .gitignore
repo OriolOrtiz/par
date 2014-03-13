@@ -3,3 +3,4 @@
 *.pdf
 *.synctex.*
 *.fdb_latexmk
+*.pyg
