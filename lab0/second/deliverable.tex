@@ -1,0 +1,122 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage[justification=centering,labelfont=bf]{caption}
+\usepackage{listings}
+
+
+\newcommand{\blueline}[1]{\textcolor{blue}{#1}}
+
+\newcommand{\assignatura}{Parallelism}
+\newcommand{\titol}{Second Deliverable}
+
+\newcommand{\Pautor}{Héctor Ramón Jiménez}
+\newcommand{\Sautor}{Alvaro Espuña Buxó}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\newcounter{ProblemCounter}
+\newcommand{\question}{%
+  \setcounter{enumi}{\value{ProblemCounter}}%
+  \stepcounter{ProblemCounter}%
+}
+\newcommand{\answer}[1]{
+  {\bf {#1}}
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{center}
+    \textsc{\Large \assignatura}\\
+    \texttt{1202}\\[1.5cm]
+    \HRule \\[0.4cm]
+     { \huge \bfseries \titol \\[0.4cm] }
+    \HRule \\[2.5cm]
+    \begin{minipage}{0.4\textwidth}
+      \begin{flushleft}
+        \large \Pautor
+      \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+      \begin{flushright}
+        \large \Sautor
+      \end{flushright}
+    \end{minipage}
+
+    \vfill
+    {\large \today} \\
+    {\large \texttt{Facultat d'Informàtica de Barcelona}}
+  \end{center}
+\end{titlepage}
+
+\section*{Parallelization overheads}
+\begin{enumerate}
+  \question \item Which is the overhead associated with the activation
+  of a parallel region in OpenMP? Is it constant?  Reason the answer
+  based on the results reported by the ompparallel code and the the
+  trace visualized with Paraver.
+
+  \answer{
+  }
+
+  \question \item Which is the minimum overhead associated with the
+  execution of critical regions in OpenMP?
+
+  \answer{
+  }
+
+  \question \item In the presence of lock conflicts and true sharing
+  (as it happens in dotprod mutex everytime), how the overhead
+  associated with critical increases with the number of processors?
+  How this overhead is decomposed? Reason the answer based on the
+  results visualized with Paraver.
+
+
+  \answer{
+  }
+
+
+  \question \item In the presence of false sharing (as it happens in
+  dotprod vectorsum), which is the additional average access latency
+  that you observe to memory? Which causes this increase in the memory
+  access time? Reason the answer based on the results visualized with
+  Paraver.
+
+  \answer{
+  }
+
+
+\end{enumerate}
+
+\clearpage
+\section*{Execution time and speed-up}
+\begin{enumerate}
+  \question \item Complete the following table with the execution
+  times of the different versions of dotprod that we provide to
+  you. The speed–up has to be computed with respect to the execution
+  of the serial version. For each version and number of threads, how
+  many executions have you performed?
+
+  \begin{center}
+  \begin{tabular}{| l || c | c | c|}
+    \hline
+    {\bf version} & {\bf 1 processor} & {\bf 8 processors} & {\bf speed-up}
+    \hline\hline
+    dotprod\_serial & & & h\\
+    \hline
+    dotprod\_mutex\_everytime & & & h \\
+    \hline
+    dotprod\_mutex & & & h\\
+    \hline
+    dotprod\_vectorsum & & & h \\
+    \hline
+    dotprod\_vectorsum\_padding & & & h \\
+    \hline
+  \end{tabular}
+  \end{center}
+
+\end{enumerate}
+
+\end{document}
