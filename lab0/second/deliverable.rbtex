@@ -64,6 +64,12 @@ document do
     answer do
     end
 
+    question "Which is the minimum overhead associated with the
+    execution of critical regions in OpenMP?"
+
+    answer do
+    end
+
     question "In the presence of lock conflicts and true sharing
     (as it happens in dotprod mutex everytime), how the overhead
     associated with critical increases with the number of processors?
