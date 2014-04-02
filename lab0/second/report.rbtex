@@ -1,0 +1,109 @@
+require './rubytex'
+
+documentclass "article", options: "a4paper,11pt"
+
+# Packages
+usepackage "inputenc", options: "utf8"
+usepackage "color", options: "usenames,dvipsnames"
+usepackage "graphicx"
+usepackage "caption", options: "justification=centering,labelfont=bf"
+usepackage "listings"
+
+# Variables
+assignatura = "Parallelism"
+titol = "Second Deliveraible"
+autors = ["Héctor Ramón Jiménez", "Alvaro Espuña Buxo"]
+
+# Commands
+def blueline(line); textcolor "blue", line; end
+def hrule(); rule "\\linewidth", "0.5mm"; end
+def bold(text); textbf text; end
+
+$problem_counter = 0
+def question(text)
+  setcounter "enumi", $problem_counter
+  $problem_counter += 1
+  item text
+end
+
+def answer()
+  br
+  wrap do
+    bf
+    wrap { yield }
+  end
+end
+
+document do
+  titlepage do
+    center do
+      textsc "\\Large #{assignatura}"; br
+      texttt 1202; br 1.5
+      hrule; br 2.5
+      
+      autors.each do |autor|
+        minipage "0.4\\textwidth" do
+          flushleft { large; puts autor }
+        end
+      end
+
+      vfill
+      wrap { large; today }
+      br
+      wrap { large; texttt "Facultat d'Informàtica de Barcelona" }
+    end
+  end
+
+  section "Parallelization overheads", special: true
+  enumerate do
+    question "Which is the overhead associated with the activation
+    of a parallel region in OpenMP? Is it constant?  Reason the answer
+    based on the results reported by the ompparallel code and the the
+    trace visualized with Paraver."
+
+    answer do
+    end
+
+    question "In the presence of lock conflicts and true sharing
+    (as it happens in dotprod mutex everytime), how the overhead
+    associated with critical increases with the number of processors?
+    How this overhead is decomposed? Reason the answer based on the
+    results visualized with Paraver."
+
+    answer do
+    end
+
+    question "In the presence of false sharing (as it happens in
+    dotprod vectorsum), which is the additional average access latency
+    that you observe to memory? Which causes this increase in the memory
+    access time? Reason the answer based on the results visualized with
+    Paraver."
+
+    answer do
+    end
+  end
+
+  clearpage
+
+  section "Execution time and speedup", special: true
+  enumerate do
+    question "Complete the following table with the execution
+    times of the different versions of dotprod that we provide to
+    you. The speed–up has to be computed with respect to the execution
+    of the serial version. For each version and number of threads, how
+    many executions have you performed?"
+
+    center do
+      tabular "| l || c | c | c |" do
+        head "version", "1 processor", "8 processors", "speed–up"
+        hline
+        row "dotprod_serial", "", "", ""
+        row "dotprod_mutex_everytime", "", "", ""
+        row "dotprod_mutex", "", "", ""
+        row "dotprod_vectorsum", "", "", ""
+        row "dotprod_vectorsum_padding", "", "", ""
+        hline
+      end
+    end
+  end
+end
