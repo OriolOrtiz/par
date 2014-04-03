@@ -1,7 +1,7 @@
 def method_missing(m, *args, options: nil, special: false, &block)
   m = m.to_s
 
-  return if m == 'to_hash'
+  return if m.start_with?("to_")
 
   if block_given?
     print "\\begin{#{m}}"

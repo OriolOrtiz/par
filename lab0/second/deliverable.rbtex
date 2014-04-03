@@ -11,7 +11,7 @@ usepackage "listings"
 
 # Variables
 assignatura = "Parallelism"
-titol = "Second Deliveraible"
+titol = "Second deliverable"
 autors = ["Héctor Ramón Jiménez", "Alvaro Espuña Buxo"]
 
 # Commands
@@ -23,15 +23,12 @@ $problem_counter = 0
 def question(text)
   setcounter "enumi", $problem_counter
   $problem_counter += 1
-  item text
+  item; bold text
 end
 
 def answer()
   br
-  wrap do
-    bf
-    wrap { yield }
-  end
+  yield
 end
 
 document do
@@ -39,12 +36,16 @@ document do
     center do
       textsc "\\Large #{assignatura}"; br
       texttt 1202; br 1.5
+      hrule; br 0.4
+      wrap { huge; bfseries; puts titol; br 0.4 }
       hrule; br 2.5
       
-      autors.each do |autor|
-        minipage "0.4\\textwidth" do
-          flushleft { large; puts autor }
-        end
+      minipage "0.4\\textwidth" do
+        flushleft { large; puts autors[0] }
+      end
+      
+      minipage "0.4\\textwidth" do
+        flushright { large; puts autors[1] }
       end
 
       vfill
@@ -57,17 +58,38 @@ document do
   section "Parallelization overheads", special: true
   enumerate do
     question "Which is the overhead associated with the activation
-    of a parallel region in OpenMP? Is it constant?  Reason the answer
-    based on the results reported by the ompparallel code and the the
+    of a \\texttt{parallel} region in OpenMP? Is it constant?  Reason the answer
+    based on the results reported by the \\texttt{ompparallel} code and the the
     trace visualized with Paraver."
 
+    figure options: "h!" do
+      includegraphics "overheads/ompparallel_time.pdf", options: "width=1.0\\textwidth"
+      caption "Overheads of the activation of parallel regions"
+    end
+
     answer do
+      puts "The figure above shows that the activation of the \\texttt{parallel}
+      region has a total overhead that \\textbf{grows with the number of threads}. It shows that
+      the overhead per thread remains constant, which means that the total overhead grows
+      linearly."
+      br
+      puts "Paraver shows clearly how the main thread needs to create every other thread
+      \\textbf{independently} and, at the end, join and terminate all of them. Thus, the time of
+      the creation and termination depends on the number of threads to create/terminate."
     end
 
     question "Which is the minimum overhead associated with the
     execution of critical regions in OpenMP?"
 
     answer do
+      puts "The minimum overhead occurs when a single thread is used. When there is only
+      one thread it can \\texttt{lock} the region at any moment without waiting. However,
+      \\texttt{lock} and \\texttt{unlock} take time even if there are no other threads involved.
+      This means that critical regions with one thread have an overhead compared to not using
+      them."
+      br
+      puts "Using one thread in \\texttt{dotprod mutex everytime}, it spends a \\textbf{35\\%}
+      of the execution time locking and unlocking!"
     end
 
     question "In the presence of lock conflicts and true sharing
@@ -77,6 +99,23 @@ document do
     results visualized with Paraver."
 
     answer do
+      center do
+        tabular "| l || c |" do
+          head "Number of threads", "Time (s)"
+          hline
+          row 1, 1
+          row 2, 7
+          row 4, 24
+          row 8, 35
+          hline
+        end
+      end
+
+      puts "As the table above shows, the overhead grows far from a linear way.
+      The chances of a successful \\texttt{lock} decrease as the number of threads grows.
+      Paraver shows that every thread spends approximately, in the cases of 4 and 8 threads,
+      a \\textbf{60\\%} of the execution time in the \\texttt{lock} phase when only stays
+      \\texttt{locked} a \\textbf{1\\%} of it."
     end
 
     question "In the presence of false sharing (as it happens in
@@ -103,7 +142,7 @@ document do
       tabular "| l || c | c | c |" do
         head "version", "1 processor", "8 processors", "speed–up"
         hline
-        row "dotprod_serial", "", "", ""
+        row "dotprod_serial", "", "-", "1"
         row "dotprod_mutex_everytime", "", "", ""
         row "dotprod_mutex", "", "", ""
         row "dotprod_vectorsum", "", "", ""
