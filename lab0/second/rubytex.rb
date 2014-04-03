@@ -4,15 +4,7 @@ def method_missing(m, *args, options: nil, special: false, &block)
   return if m.start_with?("to_")
 
   if block_given?
-    print "\\begin{#{m}}"
-    print_options(options)
-    print_args(args)
-
-    puts
-
-    yield
-
-    puts "\\end{#{m}}"
+    env(m, *args, options: options) { yield }
   else
     print "\\#{m}"
     print '*' if special
@@ -21,6 +13,18 @@ def method_missing(m, *args, options: nil, special: false, &block)
 
     puts
   end
+end
+
+def env(name, *args, options: nil)
+  print "\\begin{#{name}}"
+  print_options(options)
+  print_args(args)
+
+  puts
+
+  yield
+
+  puts "\\end{#{name}}"
 end
 
 def print_options(options)

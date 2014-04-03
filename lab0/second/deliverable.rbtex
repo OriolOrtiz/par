@@ -33,6 +33,14 @@ def answer()
   yield
 end
 
+def figure(options: "h!")
+  env("figure", options: options) { yield }
+end
+
+def graphic(path, options: "width=1.0\\textwidth")
+  includegraphics path, options: options
+end
+
 document do
   titlepage do
     center do
@@ -64,8 +72,8 @@ document do
     based on the results reported by the \\texttt{ompparallel} code and the the
     trace visualized with Paraver."
 
-    figure options: "h!" do
-      includegraphics "overheads/ompparallel_time.pdf", options: "width=1.0\\textwidth"
+    figure do
+      graphic "overheads/ompparallel_time.pdf"
       caption "Overheads of the activation of parallel regions"
     end
 
@@ -137,15 +145,15 @@ document do
       math do
         puts "T_{critical_P}"
         equals
-        frac "T_{P_{mutex\\_everytime}} - \\frac{T_{P_{serial}}}{P} - 0.333 \\cdot (P-1)", "N_{P_{critical\\_regions}}"
+        frac "T_{P_{mutex\\_everytime}} - \\frac{T_{P_{serial}}}{P} - 0.333 \\cdot (P-1)", "N_{critical\\_regions}"
       end
       puts "For example, with $P = 8$:"
       
-      $critical_8 = (35.447 - (0.315 / 8) - 0.333 * 7) * 10**9 / (2**26 / 8)
+      $critical_8 = (35.447 - (0.315 / 8) - 0.333 * 7) * 10**9 / 2**26
       math do
         puts "T_{critical_8}"
         equals
-        frac "35.447 - \\frac{0.315}{8} - 0.333 \\cdot 7", "\\frac{2^{26}}{8}"
+        frac "35.447 - \\frac{0.315}{8} - 0.333 \\cdot 7", "2^{26}"
         cdot "10^9"
         equals
         puts "%.3f ns" % [$critical_8]
@@ -155,17 +163,50 @@ document do
       than using one thread!" % [$critical_8 / $critical_1 - 1]
     end
 
-    question "In the presence of false sharing (as it happens in
+    clearpage
+
+    question "In the presence of \\texttt{false sharing} (as it happens in
     dotprod vectorsum), which is the additional average access latency
     that you observe to memory? Which causes this increase in the memory
     access time? Reason the answer based on the results visualized with
     Paraver."
 
     answer do
+      puts "The additional average access latency to memory can be calculated using the time of
+      the versions with and without \\texttt{false sharing}:"
+
+      $m = (0.243 - 0.069) * 10**9 / (2**26 / 8)
+      math do
+        puts "T_m"
+        equals
+        frac "T_{no\\_padding} - T_{padding}", "\\frac{N_{accesses}}{P}"
+        equals
+        frac "0.243 - 0.069", "\\frac{2^{26}}{8}"
+        cdot "10^9"
+        equals
+        puts "%f ns" % [ $m ]
+      end
+
+      puts "These are the Paraver histograms that show noticeable differences:"
+
+      figure do
+        graphic "overheads/Total_number_of_L3D_accesses@dotprod_vectorsum-i.png"
+        graphic "overheads/Total_number_of_L3D_accesses@dotprod_vectorsum_padding-i.png"
+        caption "Differences in level 3 cache accesses"
+      end
+
+      figure do
+        graphic "overheads/Total_number_of_snoop_requests@dotprod_vectorsum-i.png"
+        graphic "overheads/Total_number_of_snoop_requests@dotprod_vectorsum_padding-i.png"
+        caption "Differences in snoop requests"
+      end
+
+      puts "The histograms show that \\texttt{false sharing} produces a huge increase in the accesses
+      to level 3 caches and snoop requests. This means that the first two levels of caches have the data
+      \\texttt{invalidated} because some other thread has modified \\textbf{part of it}. That's the cause
+      of the increase in memory access time."
     end
   end
-
-  clearpage
 
   section "Execution time and speedup", special: true
   enumerate do
@@ -179,13 +220,25 @@ document do
       tabular "| l || c | c | c |" do
         head "version", "1 processor", "8 processors", "speed–up"
         hline
-        row "dotprod_serial", "", "-", "1"
-        row "dotprod_mutex_everytime", "", "", ""
-        row "dotprod_mutex", "", "", ""
-        row "dotprod_vectorsum", "", "", ""
-        row "dotprod_vectorsum_padding", "", "", ""
+
+        serial = 0.315
+        versions = {
+          "mutex_everytime"   => [1.079, 35.447],
+          "mutex"             => [0.360, 0.067],
+          "vectorsum"         => [0.383, 0.242],
+          "vectorsum_padding" => [0.385, 0.069]
+        }
+
+        row "dotprod_serial", serial, "-", "1"
+
+        versions.each do |name, times|
+          row "dotprod_#{name}", "%.3f" % times[0], "%.3f" % times[1], "%.3f" % [ serial / times.min ] 
+        end
+
         hline
       end
     end
+
+    puts "Two executions for each version and number of threads."
   end
 end
