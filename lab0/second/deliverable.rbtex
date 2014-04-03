@@ -18,6 +18,8 @@ autors = ["Héctor Ramón Jiménez", "Alvaro Espuña Buxo"]
 def blueline(line); textcolor "blue", line; end
 def hrule(); rule "\\linewidth", "0.5mm"; end
 def bold(text); textbf text; end
+def math(); puts "\\["; yield; puts "\\]"; end
+def equals(); puts "="; end
 
 $problem_counter = 0
 def question(text)
@@ -70,7 +72,7 @@ document do
     answer do
       puts "The figure above shows that the activation of the \\texttt{parallel}
       region has a total overhead that \\textbf{grows with the number of threads}. It shows that
-      the overhead per thread remains constant, which means that the total overhead grows
+      the overhead per thread remains constant ($\\approx0.333\\mu s$), which means that the total overhead grows
       linearly."
       br
       puts "Paraver shows clearly how the main thread needs to create every other thread
@@ -88,8 +90,20 @@ document do
       This means that critical regions with one thread have an overhead compared to not using
       them."
       br
-      puts "Using one thread in \\texttt{dotprod mutex everytime}, it spends a \\textbf{35\\%}
-      of the execution time locking and unlocking!"
+      puts "To calculate the minimum overhead per critical region executed we can use the time (in $ns$) of
+      \\texttt{dotprod\\_serial} and \\texttt{dotprod\\_mutex\\_everytime} with one single thread:"
+
+      $critical_1 = (1.079 - 0.315) * 10**9 / 2**26
+      math do
+        puts "T_{critical_1}"
+        equals
+        frac "T_{1\\_mutex\\_everytime} - T_{1\\_serial}", "N_{critical\\_regions}"
+        equals
+        frac "1.079 - 0.315", "2^{26}"
+        cdot "10^9"
+        equals
+        puts "%.3f ns" % [$critical_1]
+      end
     end
 
     question "In the presence of lock conflicts and true sharing
@@ -113,9 +127,32 @@ document do
 
       puts "As the table above shows, the overhead grows far from a linear way.
       The chances of a successful \\texttt{lock} decrease as the number of threads grows.
-      Paraver shows that every thread spends approximately, in the cases of 4 and 8 threads,
+      Paraver shows that every thread spends approximately, when using 4 or 8 threads,
       a \\textbf{60\\%} of the execution time in the \\texttt{lock} phase when only stays
       \\texttt{locked} a \\textbf{1\\%} of it."
+      br
+      puts "We can calculate the overhead associated with the critical regions in function of the number of threads.
+      If we use $P$ threads then the work performed by \\texttt{dotprod\\_serial} is shared equitatively. 
+      We have to add to the equation the overhead of creation/termination of the additional threads:"
+      math do
+        puts "T_{critical_P}"
+        equals
+        frac "T_{P_{mutex\\_everytime}} - \\frac{T_{P_{serial}}}{P} - 0.333 \\cdot (P-1)", "N_{P_{critical\\_regions}}"
+      end
+      puts "For example, with $P = 8$:"
+      
+      $critical_8 = (35.447 - (0.315 / 8) - 0.333 * 7) * 10**9 / (2**26 / 8)
+      math do
+        puts "T_{critical_8}"
+        equals
+        frac "35.447 - \\frac{0.315}{8} - 0.333 \\cdot 7", "\\frac{2^{26}}{8}"
+        cdot "10^9"
+        equals
+        puts "%.3f ns" % [$critical_8]
+      end
+
+      puts "This is actually $\\frac{T_{critical_8}}{T_{critical_1}} - 1 = %.3f$ times more overhead
+      than using one thread!" % [$critical_8 / $critical_1 - 1]
     end
 
     question "In the presence of false sharing (as it happens in
