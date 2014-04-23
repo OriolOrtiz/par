@@ -1,0 +1,60 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage[justification=centering,labelfont=bf]{caption}
+\usepackage{listings}
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\textsc{\Large Parallelism}
+\\
+\texttt{1202}
+\\[1.5cm]
+\rule{\linewidth}{0.5mm}
+\\[0.4cm]
+{\huge
+\bfseries
+Lab 1: Embarrassingly parallelism with OpenMP: Mandelbrot set
+\\[0.4cm]
+}
+\rule{\linewidth}{0.5mm}
+\\[2.5cm]
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft}
+\large
+Héctor Ramón Jiménez
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+\large
+Alvaro Espuña Buxo
+\end{flushright}
+\end{minipage}
+\vfill
+{\large
+\today
+}
+\\
+{\large
+\texttt{Facultat d'Informàtica de Barcelona}
+}
+\end{center}
+\end{titlepage}
+\section{Reading activity}
+In this first part of the report we first briefly describe the basic formulation for the Mandelbrot set [...]
+    [Here you should add an identification of the reference that you have used to write the simple description
+    of the problem, and that you should include below.] and then its implementation in the sequential code
+    available (mandel-serial.c). The Mandelbrot set is a particular set of points, in the complex domain ...
+    [Here you should write about the complex space, the recurrence polynomial that is applied to each point
+    in that complex space and the condition used to decide if it belongs or not to the set.]
+    The simplest algorithm for drawing a picture of the Mandelbrot set is the following. We discretize the
+    complex space in a set of points and each point corresponds to a pixel in a two dimensional plot. To color
+    any such pixel, let c (represented by the complex variable ...... [Complete it] at the mandel-serial.c
+    code) be the midpoint of that pixel. ... [ Here you should continue the description of the sequential
+    algorithm clearly naming the variables that are used in mandel-serial.c and the criteria used to decide
+    the color for each point.]
+    [...] ... [Here you should insert the identification reference and the description of that reference: title,
+    authors, year of publication, website, etc.]
+\end{document}

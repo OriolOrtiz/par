@@ -1,0 +1,57 @@
+require '../rubytex'
+
+documentclass "article", options: "a4paper,11pt"
+
+# Packages
+usepackage "inputenc", options: "utf8"
+usepackage "color", options: "usenames,dvipsnames"
+usepackage "graphicx"
+usepackage "caption", options: "justification=centering,labelfont=bf"
+usepackage "listings"
+
+# Variables
+assignatura = "Parallelism"
+titol = "Lab 1: Embarrassingly parallelism with OpenMP: Mandelbrot set"
+autors = ["Héctor Ramón Jiménez", "Alvaro Espuña Buxo"]
+
+document do
+  titlepage do
+    center do
+      textsc "\\Large #{assignatura}"; br
+      texttt 1202; br 1.5
+      hrule; br 0.4
+      wrap { huge; bfseries; puts titol; br 0.4 }
+      hrule; br 2.5
+      
+      minipage "0.4\\textwidth" do
+        flushleft { large; puts autors[0] }
+      end
+      
+      minipage "0.4\\textwidth" do
+        flushright { large; puts autors[1] }
+      end
+
+      vfill
+      wrap { large; today }
+      br
+      wrap { large; texttt "Facultat d'Informàtica de Barcelona" }
+    end
+  end
+
+  section "Reading activity"
+  p "In this first part of the report we first briefly describe the basic formulation for the Mandelbrot set [...]
+    [Here you should add an identification of the reference that you have used to write the simple description
+    of the problem, and that you should include below.] and then its implementation in the sequential code
+    available (mandel-serial.c). The Mandelbrot set is a particular set of points, in the complex domain ...
+    [Here you should write about the complex space, the recurrence polynomial that is applied to each point
+    in that complex space and the condition used to decide if it belongs or not to the set.]
+    The simplest algorithm for drawing a picture of the Mandelbrot set is the following. We discretize the
+    complex space in a set of points and each point corresponds to a pixel in a two dimensional plot. To color
+    any such pixel, let c (represented by the complex variable ...... [Complete it] at the mandel-serial.c
+    code) be the midpoint of that pixel. ... [ Here you should continue the description of the sequential
+    algorithm clearly naming the variables that are used in mandel-serial.c and the criteria used to decide
+    the color for each point.]
+    [...] ... [Here you should insert the identification reference and the description of that reference: title,
+    authors, year of publication, website, etc.]"
+
+end
