@@ -8,6 +8,7 @@ usepackage "color", options: "usenames,dvipsnames"
 usepackage "graphicx"
 usepackage "caption", options: "justification=centering,labelfont=bf"
 usepackage "listings"
+usepackage "hyperref", options: "hidelinks"
 
 # Variables
 assignatura = "Parallelism"
@@ -40,8 +41,8 @@ document do
 
   section "Reading activity"
   p "In this first part of the report we first briefly describe the basic formulation for the \\textbf{Mandelbrot set}
-    (reference here) and then its implementation in the sequential code available (\\texttt{mandel-serial.c})."
-    
+    (see \\ref{mandelbrot:references}) and then its implementation in the sequential code available (\\texttt{mandel-serial.c})."
+
   subsection "Description"
   p "The \\textbf{Mandelbrot set} is a particular set of points in the complex domain named after the mathematician
     \\textbf{Benoit Mandelbrot}, who studied it and popularized it. The \\textbf{Mandelbrot set}'s boundary is an easily
@@ -65,15 +66,44 @@ document do
     $0$ under iteration of the complex quadratic polynomial $z_{n+1} = z^2_n + c$ remains bounded."
 
   subsection "Algorithm"
-  p "The simplest algorithm for drawing a picture of the Mandelbrot set is the following. We discretize the
-    complex space in a set of points and each point corresponds to a pixel in a two dimensional plot. To color
-    any such pixel, let c (represented by the complex variable ...... [Complete it] at the mandel-serial.c
-    code) be the midpoint of that pixel. ... [ Here you should continue the description of the sequential
-    algorithm clearly naming the variables that are used in mandel-serial.c and the criteria used to decide
-    the color for each point.]"
-    br
+  p "The simplest algorithm for drawing a picture of the Mandelbrot set is the following. We \\textbf{discretize} the
+    complex space in a set of points and each point corresponds to a \\textbf{pixel} in a two dimensional plot. To color
+    any such pixel, let $c$ (represented by the complex variable $c$ at the \\texttt{mandel-serial.c}
+    code) be the midpoint of that pixel. Then we calculate $z_0$, $z_1$, ... (stored in the complex variable
+    $z$) and beyond until \\textbf{divergence} occurs or
+    the \\textbf{maximum number of iterations} is reached. We assume that divergence happens when the resulting complex
+    $z_j$ is \\textbf{not contained in the problem space}. More precisely, let the problem space be
+    $\\{ (r, i) \\: | -\\!N < r < N, \\: -N < i < N \\}$, then divergence occurs when:"
 
-  p "Here you should insert the identification reference and the description of that reference: title,
-    authors, year of publication, website, etc."
+    math do
+      p "length(z_j) \\geq N"
+    end
+
+  br
+
+  p "The \\textbf{intensity of the color} of the point $c$ is directly proportional to the \\textbf{number of iterations performed}
+    $k_c$ without divergence. Thus the points that belong to the \\textbf{Mandelbrot set} are going to be the most intense ones
+    (usually black color). That can be easily done calculating the \\texttt{scale\\_color} variable, which is the factor that needs
+    to be applied to the \\texttt{min\\_color} for every performed iteration:"
+
+    math do
+      p "\\texttt{scale\\_color}"
+      equals
+      frac "\\texttt{max\\_color} - \\texttt{min\\_color}", "\\texttt{maxiter} - 1"
+    end
+
+    math do
+      p "\\texttt{color}"
+      equals
+      p "(k_c - 1) \\cdot \\texttt{scale\\_color} + \\texttt{min\\_color}"
+    end
+  
+  subsection "References"
+  label "mandelbrot:references"
+
+  enumerate do
+    item "Mandelbrot set - Wikipedia, the free encyclopedia. [Internet]. url:
+    \\url{http://en.wikipedia.org/wiki/Mandelbrot\\_set} (visited on Apr 23, 2014)."
+  end
 
 end
