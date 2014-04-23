@@ -1,3 +1,15 @@
+class String
+  def to_a()
+    self.split(',')
+  end
+end
+
+class Array
+  def to_a()
+    self
+  end
+end
+
 def method_missing(m, *args, options: nil, special: false, &block)
   m = m.to_s
 
@@ -39,6 +51,10 @@ def escape(s)
   s.gsub('_', '\\_')
 end
 
+def p(*args)
+  puts *args
+end
+
 def wrap()
     print "{"
     yield
@@ -61,14 +77,29 @@ def row(*args)
   br
 end
 
-class String
-  def to_a()
-    self.split(',')
-  end
+def figure(options: "h!")
+  env("figure", options: options) { yield }
 end
 
-class Array
-  def to_a()
-    self
-  end
+def graphic(path, options: "width=1.0\\textwidth")
+  includegraphics path, options: options
 end
+
+$problem_counter = 0
+def question(text)
+  setcounter "enumi", $problem_counter
+  $problem_counter += 1
+  item; bold text
+end
+
+def answer()
+  br
+  yield
+end
+
+# Commands
+def blueline(line); textcolor "blue", line; end
+def hrule(); rule "\\linewidth", "0.5mm"; end
+def bold(text); textbf text; end
+def math(); puts "\\["; yield; puts "\\]"; end
+def equals(); puts "="; end

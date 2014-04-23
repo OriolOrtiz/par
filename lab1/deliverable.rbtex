@@ -39,19 +39,41 @@ document do
   end
 
   section "Reading activity"
-  p "In this first part of the report we first briefly describe the basic formulation for the Mandelbrot set [...]
-    [Here you should add an identification of the reference that you have used to write the simple description
-    of the problem, and that you should include below.] and then its implementation in the sequential code
-    available (mandel-serial.c). The Mandelbrot set is a particular set of points, in the complex domain ...
-    [Here you should write about the complex space, the recurrence polynomial that is applied to each point
-    in that complex space and the condition used to decide if it belongs or not to the set.]
-    The simplest algorithm for drawing a picture of the Mandelbrot set is the following. We discretize the
+  p "In this first part of the report we first briefly describe the basic formulation for the \\textbf{Mandelbrot set}
+    (reference here) and then its implementation in the sequential code available (\\texttt{mandel-serial.c})."
+    
+  subsection "Description"
+  p "The \\textbf{Mandelbrot set} is a particular set of points in the complex domain named after the mathematician
+    \\textbf{Benoit Mandelbrot}, who studied it and popularized it. The \\textbf{Mandelbrot set}'s boundary is an easily
+    recognizable two-dimensional fractal shape (see figure \\ref{mandelbrot:boundary})."
+
+  figure do
+    graphic "figures/mandelbrot_boundary.jpg"
+    caption "The Mandelbrot set boundary"
+    label "mandelbrot:boundary"
+  end
+
+  br
+
+  p "Mandelbrot set images are made by sampling complex numbers and determining for each whether the result
+    \\textbf{tends towards infinity} when a particular mathematical operation is \\textbf{iterated} on it. The real
+    and imaginary parts of each number are treated as image coordinates. The pixels are colored according to how rapidly
+    the sequence diverges."
+    br
+
+  p "More precisely, the \\textbf{Mandelbrot set} is the set of values of $c$ in the complex plane for which the orbit of
+    $0$ under iteration of the complex quadratic polynomial $z_{n+1} = z^2_n + c$ remains bounded."
+
+  subsection "Algorithm"
+  p "The simplest algorithm for drawing a picture of the Mandelbrot set is the following. We discretize the
     complex space in a set of points and each point corresponds to a pixel in a two dimensional plot. To color
     any such pixel, let c (represented by the complex variable ...... [Complete it] at the mandel-serial.c
     code) be the midpoint of that pixel. ... [ Here you should continue the description of the sequential
     algorithm clearly naming the variables that are used in mandel-serial.c and the criteria used to decide
-    the color for each point.]
-    [...] ... [Here you should insert the identification reference and the description of that reference: title,
-    authors, year of publication, website, etc.]"
+    the color for each point.]"
+    br
+
+  p "Here you should insert the identification reference and the description of that reference: title,
+    authors, year of publication, website, etc."
 
 end
