@@ -106,4 +106,63 @@ document do
     \\url{http://en.wikipedia.org/wiki/Mandelbrot\\_set} (visited on Apr 23, 2014)."
   end
 
+  clearpage
+
+  section "Task granularity analysis"
+  p "[...]"
+
+  clearpage
+
+  section "OpenMP execution analysis"
+
+  class Float
+    def to_s
+      "%.3f" % self # Just 3 decimals please
+    end
+  end
+
+  enumerate do
+    question "For each parallelization strategy of the non-graphical version, complete the following table with
+    the execution time for different loop schedules and number of threads, reasoning about the results
+    that are obtained."
+
+    rows = [
+      [1, 30.207, 30.207, 30.207, 30.207],
+      [2, 15.2227, 15.2333, 15.206, 15.2237],
+      [4, 15.2283, 7.71504, 7.61174, 16.6542],
+      [6, 14.7159, 5.39143, 5.33425, 11.4375],
+      [8, 12.7566, 4.0251, 4.02479, 8.14678],
+      [10, 10.9242, 3.36377, 3.3757, 7.12668],
+      [12, 9.58021, 2.80187, 2.81733, 6.00559]
+    ]
+
+    center do
+      tabular "| c || c | c | c | c |" do
+        head "Num. threads", "static", "static, 1", "dynamic, 1", "guided, 1"
+        hline
+        rows.each {|r| row *r}
+        hline
+      end
+    end
+
+    p "[...]"
+
+    question "For each parallelization strategy, complete the following table with the information extracted from
+    the Extrae instrumented executions with 8 threads and analysis with Paraver, reasoning about the
+    results that are obtained."
+
+    center do
+      tabular "| c || c | c | c | c |" do
+        head "", "static", "static, 1", "dynamic, 1", "guided, 1"
+        hline
+        row "Running avg. time per thread", "", "", "", ""
+        row "Execution unbalance", "", "", "", ""
+        row "SchedForkJoin", "", "", "", ""
+        hline
+      end
+    end
+
+    p "[...]"
+  end
+
 end

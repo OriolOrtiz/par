@@ -96,4 +96,71 @@ The \textbf{intensity of the color} of the point $c$ is directly proportional to
 \item{Mandelbrot set - Wikipedia, the free encyclopedia. [Internet]. url:
     \url{http://en.wikipedia.org/wiki/Mandelbrot\_set} (visited on Apr 23, 2014).}
 \end{enumerate}
+\clearpage
+\section{Task granularity analysis}
+[...]
+\clearpage
+\section{OpenMP execution analysis}
+\begin{enumerate}
+\setcounter{enumi}{0}
+\item
+\textbf{For each parallelization strategy of the non-graphical version, complete the following table with
+    the execution time for different loop schedules and number of threads, reasoning about the results
+    that are obtained.}
+\begin{center}
+\begin{tabular}{| c || c | c | c | c |}
+\hline
+\textbf{Num. threads} & \textbf{static} & \textbf{static, 1} & \textbf{dynamic, 1} & \textbf{guided, 1}
+\\
+\hline
+\hline
+1 & 30.207 & 30.207 & 30.207 & 30.207
+\\
+\hline
+2 & 15.223 & 15.233 & 15.206 & 15.224
+\\
+\hline
+4 & 15.228 & 7.715 & 7.612 & 16.654
+\\
+\hline
+6 & 14.716 & 5.391 & 5.334 & 11.438
+\\
+\hline
+8 & 12.757 & 4.025 & 4.025 & 8.147
+\\
+\hline
+10 & 10.924 & 3.364 & 3.376 & 7.127
+\\
+\hline
+12 & 9.580 & 2.802 & 2.817 & 6.006
+\\
+\hline
+\end{tabular}
+\end{center}
+[...]
+\setcounter{enumi}{1}
+\item
+\textbf{For each parallelization strategy, complete the following table with the information extracted from
+    the Extrae instrumented executions with 8 threads and analysis with Paraver, reasoning about the
+    results that are obtained.}
+\begin{center}
+\begin{tabular}{| c || c | c | c | c |}
+\hline
+\textbf{} & \textbf{static} & \textbf{static, 1} & \textbf{dynamic, 1} & \textbf{guided, 1}
+\\
+\hline
+\hline
+Running avg. time per thread &  &  &  & 
+\\
+\hline
+Execution unbalance &  &  &  & 
+\\
+\hline
+SchedForkJoin &  &  &  & 
+\\
+\hline
+\end{tabular}
+\end{center}
+[...]
+\end{enumerate}
 \end{document}
