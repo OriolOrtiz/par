@@ -109,11 +109,16 @@ document do
 
   clearpage
 
+  class Float
+    def to_s
+      "%.3f" % self # Just 3 decimals please
+    end
+  end
+
   section "Task granularity analysis"
 
   enumerate do
-
-    item "Which are the two most important common
+    question "Which are the two most important common
     characteristics of the task graphs generated for the two task
     granularities (\\emph{Row} and \\emph{Point}) for
     \\textbf{mandel-tareador}?  Include the task graphs that are
@@ -123,39 +128,32 @@ document do
 
     figure do
       graphic "figures/point_deps_mandel.pdf"
-      caption "Task decomposition with \emph{Point} granularity."
+      caption "Task decomposition with \\emph{Point} granularity."
       label "figure:mandel-point"
     end
 
     figure do
       graphic "figures/row_deps_mandel.pdf"
-      caption "Task decomposition with \emph{Row} granularity."
+      caption "Task decomposition with \\emph{Row} granularity."
       label "figure:mandel-row"
     end
 
-    item "Which section of the code is causing the serialization of
+    question "Which section of the code is causing the serialization of
     all tasks in mandeld-tareador? Include the task graph generated for
     the graphical version of Point after isolating the section of the
     code"
 
-    item "Using the results obtained from the simulated parallel
-execution for mandel-tareador and for a size of -w 16, complete the
-following table with the execution time and speed-up (with respect to
-the execution with 1 processor) obtained for the non-graphical
-version, for both individual task granularities. Comment the results
-highlighting the reason for the poor scalability, if detected?"
-
+    question "Using the results obtained from the simulated parallel
+    execution for mandel-tareador and for a size of -w 16, complete the
+    following table with the execution time and speed-up (with respect to
+    the execution with 1 processor) obtained for the non-graphical
+    version, for both individual task granularities. Comment the results
+    highlighting the reason for the poor scalability, if detected?"
   end
 
   clearpage
 
   section "OpenMP execution analysis"
-
-  class Float
-    def to_s
-      "%.3f" % self # Just 3 decimals please
-    end
-  end
 
   enumerate do
     question "For each parallelization strategy of the non-graphical version, complete the following table with

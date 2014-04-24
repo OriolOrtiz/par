@@ -98,11 +98,45 @@ The \textbf{intensity of the color} of the point $c$ is directly proportional to
 \end{enumerate}
 \clearpage
 \section{Task granularity analysis}
-[...]
+\begin{enumerate}
+\setcounter{enumi}{0}
+\item
+\textbf{Which are the two most important common
+    characteristics of the task graphs generated for the two task
+    granularities (\emph{Row} and \emph{Point}) for
+    \textbf{mandel-tareador}?  Include the task graphs that are
+    generated in both cases for \texttt{-w 8}.}
+\\
+There are no data dependencies between tasks.
+\begin{figure}[h!]
+\includegraphics[width=1.0\textwidth]{figures/point_deps_mandel.pdf}
+\caption{Task decomposition with \emph{Point} granularity.}
+\label{figure:mandel-point}
+\end{figure}
+\begin{figure}[h!]
+\includegraphics[width=1.0\textwidth]{figures/row_deps_mandel.pdf}
+\caption{Task decomposition with \emph{Row} granularity.}
+\label{figure:mandel-row}
+\end{figure}
+\setcounter{enumi}{1}
+\item
+\textbf{Which section of the code is causing the serialization of
+    all tasks in mandeld-tareador? Include the task graph generated for
+    the graphical version of Point after isolating the section of the
+    code}
+\setcounter{enumi}{2}
+\item
+\textbf{Using the results obtained from the simulated parallel
+    execution for mandel-tareador and for a size of -w 16, complete the
+    following table with the execution time and speed-up (with respect to
+    the execution with 1 processor) obtained for the non-graphical
+    version, for both individual task granularities. Comment the results
+    highlighting the reason for the poor scalability, if detected?}
+\end{enumerate}
 \clearpage
 \section{OpenMP execution analysis}
 \begin{enumerate}
-\setcounter{enumi}{0}
+\setcounter{enumi}{3}
 \item
 \textbf{For each parallelization strategy of the non-graphical version, complete the following table with
     the execution time for different loop schedules and number of threads, reasoning about the results
@@ -138,7 +172,7 @@ The \textbf{intensity of the color} of the point $c$ is directly proportional to
 \end{tabular}
 \end{center}
 [...]
-\setcounter{enumi}{1}
+\setcounter{enumi}{4}
 \item
 \textbf{For each parallelization strategy, complete the following table with the information extracted from
     the Extrae instrumented executions with 8 threads and analysis with Paraver, reasoning about the
@@ -156,7 +190,7 @@ Running avg. time per thread (s) & 3.800 & 3.815 & 3.804
 Execution unbalance (s) & 0.298 & 0.298 & 0.300
 \\
 \hline
-SchedForkJoin ($\mu s$) & 85.227 & 1.599 &  & 
+SchedForkJoin ($\mu s$) & 85.227 & 1.599 & 1.584 & 
 \\
 \hline
 \end{tabular}
