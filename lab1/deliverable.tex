@@ -136,6 +136,10 @@ The two most important characteristics we can see from both graphs are:
 \caption{Task decomposition with \emph{Row} granularity.}
 \label{figure:mandel-row}
 \end{figure}
+
+As we'll see later the different sizes of the tasks is very relevant in terms
+of load balancing.
+
 \newpage
 \setcounter{enumi}{1}
 \item
@@ -240,7 +244,13 @@ way.
 \textbf{For each parallelization strategy of the non-graphical version, complete the following table with
     the execution time for different loop schedules and number of threads, reasoning about the results
     that are obtained.}
-\begin{center}
+
+\answerspace
+We did these exercise along with our colleagues of group 1201 (Lorenzo
+Arribas and David Solà). They performed timing for the not \texttt{collapse}d version.
+These are the results:
+
+\begin{table}[h]
 \begin{tabular}{| c || c | c | c | c |}
 \hline
 \textbf{Num. threads} & \textbf{static} & \textbf{static, 1} & \textbf{dynamic, 1} & \textbf{guided, 1}
@@ -269,8 +279,36 @@ way.
 \\
 \hline
 \end{tabular}
-\end{center}
-[...]
+\caption{Results for the uncollapsed version. Times are in seconds.}
+\end{table}
+
+\begin{itemize}
+\item \texttt{static} gives the worst performance. This can explained considering that
+longest rows are contiguous, so a thread can have a chunk spanning multiple long
+rows, increasing the length of the critical path.
+
+\item \texttt{static,1} gives better results than \texttt{static} because rows are
+  assigned one by one. This way, long rows end up being executed by different threads
+  and can be more parallelized.
+
+\item \texttt{dynamic,1} gives similar results as \texttt{static,1}. It's not important
+  if threads are assigned dynamically or statically, since the bottleneck will be the same.
+  The important thing is that chunks have size 1.
+
+\item \texttt{guided,1} size of the chunks decreases as they are
+  assigned to different threads. Because of this, we can see that with
+  a low number of threads it behaves like \texttt{static} (since at
+  the beginning chunks have size ${n_{tasks}}/{n_{threads}}$). At the
+  end, though, as the chunk size decreases, it behaves better than
+  \texttt{static}.
+
+\end{itemize}
+
+When using the \texttt{collapse} pragma we can only notice differences when the chunks
+are big enough, otherwise they behave very similar to the uncollapsed version.
+Having big chunks reduces the difference on the task sizes.
+
+\newpage
 \setcounter{enumi}{4}
 \item
 \textbf{For each parallelization strategy, complete the following table with the information extracted from
