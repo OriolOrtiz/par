@@ -2,9 +2,18 @@
 \usepackage[utf8]{inputenc}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{graphicx}
+\usepackage{fullpage}
 \usepackage[justification=centering,labelfont=bf]{caption}
 \usepackage{listings}
 \usepackage[hidelinks]{hyperref}
+
+\makeatletter
+\g@addto@macro\@floatboxreset\centering
+\makeatother
+
+\newcommand{\answerspace}{\vspace{0.5cm}}
+\newcommand{\figurespace}{\vspace{0.6cm}}
+
 \begin{document}
 \begin{titlepage}
 \begin{center}
@@ -16,7 +25,7 @@
 \\[0.4cm]
 {\huge
 \bfseries
-Lab 1: Embarrassingly parallelism with OpenMP: Mandelbrot set
+Lab 1: Embracing parallelism with OpenMP: Mandelbrot set
 \\[0.4cm]
 }
 \rule{\linewidth}{0.5mm}
@@ -51,7 +60,7 @@ The \textbf{Mandelbrot set} is a particular set of points in the complex domain 
     \textbf{Benoit Mandelbrot}, who studied it and popularized it. The \textbf{Mandelbrot set}'s boundary is an easily
     recognizable two-dimensional fractal shape (see figure \ref{mandelbrot:boundary}).
 \begin{figure}[h!]
-\includegraphics[width=1.0\textwidth]{figures/mandelbrot_boundary.jpg}
+\includegraphics[width=0.70\textwidth]{figures/mandelbrot_boundary.jpg}
 \caption{The Mandelbrot set boundary}
 \label{mandelbrot:boundary}
 \end{figure}
@@ -124,6 +133,7 @@ There are no data dependencies between tasks.
     all tasks in mandeld-tareador? Include the task graph generated for
     the graphical version of Point after isolating the section of the
     code}
+\newpage
 \setcounter{enumi}{2}
 \item
 \textbf{Using the results obtained from the simulated parallel
@@ -132,6 +142,60 @@ There are no data dependencies between tasks.
     the execution with 1 processor) obtained for the non-graphical
     version, for both individual task granularities. Comment the results
     highlighting the reason for the poor scalability, if detected?}
+
+\answerspace
+  The results obtained of simulating the execution of
+  \texttt{mandel-tareador} with \emph{Paraver} are:
+
+  \figurespace
+  \begin{center}
+    \begin{tabular}{| c || c | c | c | c |}
+      \hline
+      & \multicolumn{2}{| c |}{\bf Row} & \multicolumn{2}{| c |}{\bf Point} \\
+      \hline
+      \textbf{Num. processors} & \textbf{Time (ms)} & \textbf{Speed-up} & \textbf{Time (ms)} & \textbf{Speed-up} \\
+      \hline\hline
+      \textbf{1} & 1080.584 & 1.000 & 1120.216 &  1.000 \\ \hline
+      \textbf{2} &  554.698 & 1.948 &  563.475 &  1.988 \\ \hline
+      \textbf{4} &  334.376 & 3.231 &  306.504 &  3.654 \\ \hline
+      \textbf{8} &  330.156 & 3.272 &  163.536 &  6.849 \\ \hline
+      \textbf{16} &  329.724 & 3.277 &   93.059 & 12.037 \\ \hline
+    \end{tabular}
+  \end{center}
+  \figurespace
+  We can see how \emph{Point} granularity seems to scale better than
+  \emph{Row} granularity. At first, with two and four processors, we
+  can see that both execution times are reduced and scale reasonably
+  well, but as we add more processors, \emph{Row} stalls.
+
+  The problem is that, with \emph{Row} granularity we have 16 tasks, and
+  as we saw earlier, there are tasks that take a lot of time. We have a load balance
+  problem, since some processor will have to execute the longest task while
+  other processors are done and waiting. The longest row becomes the bottleneck,
+  and adding more processors, won't produce speed-up.
+
+  \figurespace
+\begin{figure}[h!]
+\includegraphics[width=0.7\textwidth]{figures/row_16_cores.png}
+\caption{Row granularity: Most of the threads are in idle waiting for the longest task to finish.}
+\label{figure:load-row}
+\end{figure}
+  \figurespace
+
+  With \emph{Point} granularity, since we have 256 tasks ($16 \cdot 16$) while
+  the longest points are being computed, the other processors can do other tasks,
+  hence longest points are not the bottleneck now.
+
+  \figurespace
+\begin{figure}[h!]
+\includegraphics[width=0.7\textwidth]{figures/point_16_cores.png}
+\caption{Point granularity: Since there are many more tasks than threads, the load can be distributed better.}
+\label{figure:load-point}
+\end{figure}
+  \figurespace
+  From this exercise we can conclude that when $n_{processors} <<
+  n_{tasks}$ is more difficult to face load balance problems.
+
 \end{enumerate}
 \clearpage
 \section{OpenMP execution analysis}
@@ -190,7 +254,7 @@ Running avg. time per thread (s) & 3.800 & 3.815 & 3.804
 Execution unbalance (s) & 0.298 & 0.298 & 0.300
 \\
 \hline
-SchedForkJoin ($\mu s$) & 85.227 & 1.599 & 1.584 & 
+SchedForkJoin ($\mu s$) & 85.227 & 1.599 & 1.584 &
 \\
 \hline
 \end{tabular}
