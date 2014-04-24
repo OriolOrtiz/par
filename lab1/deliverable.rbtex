@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require '../rubytex'
 
 documentclass "article", options: "a4paper,11pt"
@@ -23,11 +24,11 @@ document do
       hrule; br 0.4
       wrap { huge; bfseries; puts titol; br 0.4 }
       hrule; br 2.5
-      
+
       minipage "0.4\\textwidth" do
         flushleft { large; puts autors[0] }
       end
-      
+
       minipage "0.4\\textwidth" do
         flushright { large; puts autors[1] }
       end
@@ -97,7 +98,7 @@ document do
       equals
       p "(k_c - 1) \\cdot \\texttt{scale\\_color} + \\texttt{min\\_color}"
     end
-  
+
   subsection "References"
   label "mandelbrot:references"
 
@@ -109,7 +110,42 @@ document do
   clearpage
 
   section "Task granularity analysis"
-  p "[...]"
+
+  enumerate do
+
+    item "Which are the two most important common
+    characteristics of the task graphs generated for the two task
+    granularities (\\emph{Row} and \\emph{Point}) for
+    \\textbf{mandel-tareador}?  Include the task graphs that are
+    generated in both cases for \\texttt{-w 8}."
+    br
+    p "There are no data dependencies between tasks."
+
+    figure do
+      graphic "figures/point_deps_mandel.pdf"
+      caption "Task decomposition with \emph{Point} granularity."
+      label "figure:mandel-point"
+    end
+
+    figure do
+      graphic "figures/row_deps_mandel.pdf"
+      caption "Task decomposition with \emph{Row} granularity."
+      label "figure:mandel-row"
+    end
+
+    item "Which section of the code is causing the serialization of
+    all tasks in mandeld-tareador? Include the task graph generated for
+    the graphical version of Point after isolating the section of the
+    code"
+
+    item "Using the results obtained from the simulated parallel
+execution for mandel-tareador and for a size of -w 16, complete the
+following table with the execution time and speed-up (with respect to
+the execution with 1 processor) obtained for the non-graphical
+version, for both individual task granularities. Comment the results
+highlighting the reason for the poor scalability, if detected?"
+
+  end
 
   clearpage
 
