@@ -6,6 +6,7 @@
 \usepackage[justification=centering,labelfont=bf]{caption}
 \usepackage{listings}
 \usepackage[hidelinks]{hyperref}
+\usepackage{enumerate}
 
 \makeatletter
 \g@addto@macro\@floatboxreset\centering
@@ -115,18 +116,27 @@ The \textbf{intensity of the color} of the point $c$ is directly proportional to
     granularities (\emph{Row} and \emph{Point}) for
     \textbf{mandel-tareador}?  Include the task graphs that are
     generated in both cases for \texttt{-w 8}.}
-\\
-There are no data dependencies between tasks.
+
+\answerspace
+The two most important characteristics we can see from both graphs are:
+\begin{enumerate}[(1)]
+  \item There are no data dependencies between tasks. They are fully parallelizable.
+  \item There are tasks that take much more time (instructions) than
+    others. Tasks are not homogeneus timewise.
+\end{enumerate}
+
 \begin{figure}[h!]
-\includegraphics[width=1.0\textwidth]{figures/point_deps_mandel.pdf}
+\includegraphics[width=0.7\textwidth, height=1.5cm]{figures/point_deps_mandel.pdf}
 \caption{Task decomposition with \emph{Point} granularity.}
 \label{figure:mandel-point}
 \end{figure}
+
 \begin{figure}[h!]
-\includegraphics[width=1.0\textwidth]{figures/row_deps_mandel.pdf}
+\includegraphics[width=0.7\textwidth]{figures/row_deps_mandel.pdf}
 \caption{Task decomposition with \emph{Row} granularity.}
 \label{figure:mandel-row}
 \end{figure}
+\newpage
 \setcounter{enumi}{1}
 \item
 \textbf{Which section of the code is causing the serialization of
