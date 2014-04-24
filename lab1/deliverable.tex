@@ -143,6 +143,31 @@ The two most important characteristics we can see from both graphs are:
     all tasks in mandeld-tareador? Include the task graph generated for
     the graphical version of Point after isolating the section of the
     code}
+
+The section that causes the serialization is the painting of the points. All threads
+must wait after computing a point to paint it, since the display system doesn't allow
+concurrent modifications of the window. The function \texttt{XDrawPoint} blocks
+the execution, so tasks must be done serialized.
+
+If we do \texttt{tareador\_disable\_object(display)} and
+\texttt{tareador\_disable\_object(\&win)} we can parallelize it more:
+
+\figurespace
+\begin{figure}[h!]
+\includegraphics[height=10cm]{figures/point_deps_mandeld.pdf}
+\caption{mandeld after disabling the blocking objects.}
+\label{figure:mandeld-point}
+\end{figure}
+
+In Figure \ref{figure:mandeld-point} we can see that it doesn't look
+as parallel as \texttt{mandel}. It is more parallel than
+\texttt{mandeld} without disabling nothing though. If we inspect data
+dependencies in \emph{Tareador} we can see that there are still
+dependencies, even when we disabled all the objects that present a
+parallelism problem. The problem is in the function calls to the X
+library. As we can not modify the library internals, we leave it this
+way.
+
 \newpage
 \setcounter{enumi}{2}
 \item
