@@ -151,13 +151,19 @@ document do
     the Extrae instrumented executions with 8 threads and analysis with Paraver, reasoning about the
     results that are obtained."
 
+    cols = [
+      {:avg => 3.8, :max => 12.763},
+      {:avg => 3.815, :max => 12.802},
+      {:avg => 3.804, :max => 12.683}
+    ]
+
     center do
       tabular "| c || c | c | c | c |" do
         head "", "static", "static, 1", "dynamic, 1", "guided, 1"
         hline
-        row "Running avg. time per thread", "", "", "", ""
-        row "Execution unbalance", "", "", "", ""
-        row "SchedForkJoin", "", "", "", ""
+        row "Running avg. time per thread (s)", *cols.map {|c| c[:avg]}
+        row "Execution unbalance (s)", *cols.map{|c| c[:avg] / c[:max]}
+        row "SchedForkJoin ($\\mu s$)", 85.227, 1.599, 1.584, ""
         hline
       end
     end
