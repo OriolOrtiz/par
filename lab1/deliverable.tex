@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{graphicx}
-\usepackage[margin=1in]{geometry}
+\usepackage[margins=0.75in]{geometry}
 \usepackage[justification=centering,labelfont=bf]{caption}
 \usepackage{listings}
 \usepackage[hidelinks]{hyperref}
@@ -332,6 +332,17 @@ SchedForkJoin ($ms$) & 12667.786 & 70.510 & 0.504 & 7805.279
 \hline
 \end{tabular}
 \end{center}
-[...]
+
+With this exercise we can confirm what we said in the previous one.
+Even all 4 strategies perform similarly in terms of average time per
+thread, they are very different.  \texttt{static} performs very badly
+because the maximum time is very high.  This is a consequence of the
+grouping of long tasks. \texttt{static,1} and \texttt{dynamic,1} have
+a good balance (pretty close to 1) because the number of threads is
+very low compared to the number of tasks and allows to cluster shorter
+tasks in parallel with a longer task.
+Also, the lowest time spent for scheduling belongs to the dynamic
+strategy, because threads are assigned as they become available.
+
 \end{enumerate}
 \end{document}
