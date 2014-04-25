@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{graphicx}
-\usepackage{fullpage}
+\usepackage[margin=1in]{geometry}
 \usepackage[justification=centering,labelfont=bf]{caption}
 \usepackage{listings}
 \usepackage[hidelinks]{hyperref}
@@ -283,7 +283,7 @@ These are the results:
 \end{table}
 
 \begin{itemize}
-\item \texttt{static} gives the worst performance. This can explained considering that
+\item \texttt{static} gives the worst performance. This can be explained considering that
 longest rows are contiguous, so a thread can have a chunk spanning multiple long
 rows, increasing the length of the critical path.
 
@@ -324,7 +324,7 @@ Having big chunks reduces the difference on the task sizes.
 Running avg. time per thread (s) & 3.800 & 3.986 & 3.984 & 3.872
 \\
 \hline
-Execution unbalance (s) & 0.298 & 0.986 & 0.998 & 0.459
+Execution balance & 0.298 & 0.986 & 0.998 & 0.459
 \\
 \hline
 SchedForkJoin ($ms$) & 12667.786 & 70.510 & 0.504 & 7805.279
