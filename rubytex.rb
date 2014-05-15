@@ -10,6 +10,7 @@ class Array
   end
 end
 
+
 def method_missing(m, *args, options: nil, special: false, &block)
   m = m.to_s
 

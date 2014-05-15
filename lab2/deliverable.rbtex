@@ -39,5 +39,28 @@ document "Lab 2: Geometric decomposition – solving the heat equation",
     block size ``\\texttt{by}'' (or equivalently the number of blocks ``\\texttt{nby}''). For example try with
     \\texttt{nby=2*nbx, nby=4*nbx, ...} Is there any performance impact? Is there an optimal point?
     Justify your answer."
+
+    class Float
+      def to_s
+        "%.3f" % self # Just 3 decimals please
+      end
+    end
+
+    rows = {
+      "2*nbx" => [6.481, 4.764, 3.945, 4.503, 7.939],
+      "4*nbx" => [6.471, 4.484, 3.667, 7.330, 14.437],
+      "8*nbx" => [6.190, 4.350, 6.505, 13.053, 19.018],
+      "16*nbx" => [6.351, 5.862, 8.015, 11.552, 17.799]
+    }
+
+    figure do
+      tabular "| l || c | c | c | c | c |" do
+        head "\\texttt{nby}", "1 thread", "2 threads", "4 threads", "8 threads", "16 threads"
+        hline
+        rows.each { |nby, values| row "\\texttt{#{nby}}", *values }
+        hline
+      end
+      caption "Impact of the number of blocks ``\\texttt{nby}''. Time is in seconds."
+    end
   end
 end
