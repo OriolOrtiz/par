@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{graphicx}
-\usepackage[margin=1in]{geometry}
+\usepackage[margins=0.75in]{geometry}
 \usepackage[justification=centering,labelfont=bf]{caption}
 \usepackage{listings}
 \usepackage[hidelinks]{hyperref}
@@ -122,7 +122,7 @@ The two most important characteristics we can see from both graphs are:
 \begin{enumerate}[(1)]
   \item There are no data dependencies between tasks. They are fully parallelizable.
   \item There are tasks that take much more time (instructions) than
-    others. Tasks are not homogeneus timewise.
+    others. Tasks are not homogeneous timewise.
 \end{enumerate}
 
 \begin{figure}[h!]
@@ -151,7 +151,7 @@ of load balancing.
 The section that causes the serialization is the painting of the points. All threads
 must wait after computing a point to paint it, since the display system doesn't allow
 concurrent modifications of the window. The function \texttt{XDrawPoint} blocks
-the execution, so tasks must be done serialized.
+the execution, so tasks must be serialized.
 
 If we do \texttt{tareador\_disable\_object(display)} and
 \texttt{tareador\_disable\_object(\&win)} we can parallelize it more:
@@ -167,8 +167,8 @@ In Figure \ref{figure:mandeld-point} we can see that it doesn't look
 as parallel as \texttt{mandel}. It is more parallel than
 \texttt{mandeld} without disabling nothing though. If we inspect data
 dependencies in \emph{Tareador} we can see that there are still
-dependencies, even when we disabled all the objects that present a
-parallelism problem. The problem is in the function calls to the X
+dependencies, even when we disabled all the objects that are relevant to
+the canvas painting. The problem is in the function calls to the X
 library. As we can not modify the library internals, we leave it this
 way.
 
@@ -332,6 +332,17 @@ SchedForkJoin ($ms$) & 12667.786 & 70.510 & 0.504 & 7805.279
 \hline
 \end{tabular}
 \end{center}
-[...]
+
+With this exercise we can confirm what we said in the previous one.
+Even all 4 strategies perform similarly in terms of average time per
+thread, they are very different.  \texttt{static} performs very badly
+because the maximum time is very high.  This is a consequence of the
+grouping of long tasks. \texttt{static,1} and \texttt{dynamic,1} have
+a good balance (pretty close to 1) because the number of threads is
+very low compared to the number of tasks and allows to cluster shorter
+tasks in parallel with a longer task.
+Also, the lowest time spent for scheduling belongs to the dynamic
+strategy, because threads are assigned as they become available.
+
 \end{enumerate}
 \end{document}
