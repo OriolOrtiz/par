@@ -78,19 +78,19 @@ The analysis of the dependencies caused by the proposed task decomposition for t
 \\
 \hline
 \hline
-\texttt{2*nbx} & 6.481 & 4.764 & 3.945 & 4.503 & 7.939
+\texttt{2*nbx} & 6.452 & 4.051 & 2.311 & 1.421 & 1.454
 \\
 \hline
-\texttt{4*nbx} & 6.471 & 4.484 & 3.667 & 7.330 & 14.437
+\texttt{4*nbx} & 6.433 & 3.597 & 1.980 & 1.275 & 1.585
 \\
 \hline
-\texttt{8*nbx} & 6.190 & 4.350 & 6.505 & 13.053 & 19.018
+\texttt{8*nbx} & 6.117 & 3.211 & 1.689 & 1.375 & 2.369
 \\
 \hline
-\texttt{16*nbx} & 6.351 & 5.862 & 8.015 & 11.552 & 17.799
+\texttt{16*nbx} & 5.708 & 2.763 & 1.666 & 1.678 & 3.784
 \\
 \hline
-\texttt{32*nbx} & 5.202 & 13.510 & 18.078 & 21.471 & -
+\texttt{32*nbx} & 4.905 & 2.642 & 1.805 & 2.629 & -
 \\
 \hline
 \end{tabular}
@@ -104,6 +104,6 @@ The number of blocks ``\texttt{nby}'' has an obvious performance impact, affecti
       performs when it's waiting its dependencies to be processed. Thus, the optimal value is going to be
       one that finds a balance between these two types of flushes (one that keeps ``\texttt{nby}''
       reasonably low but allowing to solve the dependencies quickly). In the obtained results this value
-      seems to be \texttt{4*nbx} with $4$ threads.
+      seems to be \texttt{4*nbx} with $8$ threads.
 \end{enumerate}
 \end{document}
