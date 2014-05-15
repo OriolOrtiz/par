@@ -1,0 +1,74 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage[justification=centering,labelfont=bf]{caption}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\textsc{\Large Parallelism}
+\\
+\texttt{1202}
+\\[1.5cm]
+\rule{\linewidth}{0.5mm}
+\\[0.4cm]
+{\huge
+\bfseries
+Lab 2: Geometric decomposition – solving the heat equation
+\\[0.4cm]
+}
+\rule{\linewidth}{0.5mm}
+\\[2.5cm]
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft}
+\large
+Héctor Ramón Jiménez
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+\large
+Alvaro Espuña Buxo
+\end{flushright}
+\end{minipage}
+\vfill
+{\large
+\today
+}
+\\
+{\large
+\texttt{Facultat d'Informàtica de Barcelona}
+}
+\end{center}
+\end{titlepage}
+\section{Analysis of dependences for the heat equation}
+The analysis of the dependencies caused by the proposed task decomposition for the three solvers of the
+  heat equation has been done using Tareador. Dependences appear when a task reads a memory position
+  previously written by another task. Some dependences may impose task ordering constraints while other
+  may impose data access constraints. For solving the heat equation three different solvers have been used,
+  each with different dependence patterns. For the Jacobi solver, {... describe the dependences in Jacobi
+  here...}. In the parallelization with OpenMP, we plan to guarantee these dependences { ... describe here
+  how to enforce the dependences in Jacobi ...}. { ... Other paragraphs for Gauss-Seidel solver ...}.
+  The following table summarizes the predicted speed–up for the parallel execution for the two solvers,
+  with 2, 4, 8 and 16 processors with respect to the simulation with just 1 processor. {... include table
+  generated from the Dimemas simulations ...}.
+\section{OpenMP parallelization and execution analysis}
+\begin{enumerate}
+\setcounter{enumi}{0}
+\item
+\textbf{Briefly comment the parallelization with OpenMP that has been done for the two solvers.}
+\setcounter{enumi}{1}
+\item
+\textbf{Plot the speedup achieved by the OpenMP parallel version, with respect to sequential execution
+    time, for the two solvers. Comment the results that are obtained and justify the scalability that is
+    obtained. Include Paraver timelines in order to support your explanation.}
+\setcounter{enumi}{2}
+\item
+\textbf{In the parallelization of Gauss-Seidel, analyze the impact on the parallel execution time of the
+    block size ``\texttt{by}'' (or equivalently the number of blocks ``\texttt{nby}''). For example try with
+    \texttt{nby=2*nbx, nby=4*nbx, ...} Is there any performance impact? Is there an optimal point?
+    Justify your answer.}
+\end{enumerate}
+\end{document}

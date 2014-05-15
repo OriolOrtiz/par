@@ -1,0 +1,43 @@
+require '../rubytex'
+
+documentclass "article", options: "a4paper,11pt"
+
+# Packages
+usepackage "inputenc", options: "utf8"
+usepackage "color", options: "usenames,dvipsnames"
+usepackage "graphicx"
+usepackage "caption", options: "justification=centering,labelfont=bf"
+usepackage "listings"
+usepackage "hyperref", options: "hidelinks"
+
+document "Lab 2: Geometric decomposition – solving the heat equation",
+  "1202", "Parallelism", ["Héctor Ramón Jiménez", "Alvaro Espuña Buxo"],
+  "Facultat d'Informàtica de Barcelona" do
+
+  section "Analysis of dependences for the heat equation"
+  p "The analysis of the dependencies caused by the proposed task decomposition for the three solvers of the
+  heat equation has been done using Tareador. Dependences appear when a task reads a memory position
+  previously written by another task. Some dependences may impose task ordering constraints while other
+  may impose data access constraints. For solving the heat equation three different solvers have been used,
+  each with different dependence patterns. For the Jacobi solver, {... describe the dependences in Jacobi
+  here...}. In the parallelization with OpenMP, we plan to guarantee these dependences { ... describe here
+  how to enforce the dependences in Jacobi ...}. { ... Other paragraphs for Gauss-Seidel solver ...}.
+  The following table summarizes the predicted speed–up for the parallel execution for the two solvers,
+  with 2, 4, 8 and 16 processors with respect to the simulation with just 1 processor. {... include table
+  generated from the Dimemas simulations ...}."
+
+  section "OpenMP parallelization and execution analysis"
+
+  enumerate do
+    question "Briefly comment the parallelization with OpenMP that has been done for the two solvers."
+
+    question "Plot the speedup achieved by the OpenMP parallel version, with respect to sequential execution
+    time, for the two solvers. Comment the results that are obtained and justify the scalability that is
+    obtained. Include Paraver timelines in order to support your explanation."
+
+    question "In the parallelization of Gauss-Seidel, analyze the impact on the parallel execution time of the
+    block size ``\\texttt{by}'' (or equivalently the number of blocks ``\\texttt{nby}''). For example try with
+    \\texttt{nby=2*nbx, nby=4*nbx, ...} Is there any performance impact? Is there an optimal point?
+    Justify your answer."
+  end
+end

@@ -55,6 +55,35 @@ def p(*args)
   puts *args
 end
 
+def document(title, subtitle, subject, authors, footer)
+  env "document" do
+    titlepage do
+      center do
+        textsc "\\Large #{subject}"; br
+        texttt subtitle; br 1.5
+        hrule; br 0.4
+        wrap { huge; bfseries; puts title; br 0.4 }
+        hrule; br 2.5
+
+        minipage "0.4\\textwidth" do
+          flushleft { large; puts authors[0] }
+        end
+
+        minipage "0.4\\textwidth" do
+          flushright { large; puts authors[1] }
+        end
+
+        vfill
+        wrap { large; today }
+        br
+        wrap { large; texttt footer }
+      end
+    end
+
+    yield
+  end
+end
+
 def wrap()
     print "{"
     yield
@@ -86,10 +115,11 @@ def graphic(path, options: "width=1.0\\textwidth")
 end
 
 $problem_counter = 0
-def question(text)
+def question(text, counter: nil)
+  $problem_counter = counter-1 unless counter.nil?
   setcounter "enumi", $problem_counter
-  $problem_counter += 1
   item; bold text
+  $problem_counter += 1
 end
 
 def answer()
