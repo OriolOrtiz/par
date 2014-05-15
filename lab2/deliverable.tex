@@ -96,5 +96,14 @@ The analysis of the dependencies caused by the proposed task decomposition for t
 \end{tabular}
 \caption{Impact of the number of blocks ``\texttt{nby}''. Time is in seconds.}
 \end{figure}
+\\
+The number of blocks ``\texttt{nby}'' has an obvious performance impact, affecting
+      considerably the parallel execution times. This is because the ``\texttt{nby}'' value is
+      directly related with the number of performed flushes. There are going to be at least \texttt{nby*nbx}
+      flushes to mark each block as processed. To this flushes we have to add the flushes that each thread
+      performs when it's waiting its dependencies to be processed. Thus, the optimal value is going to be
+      one that finds a balance between these two types of flushes (one that keeps ``\texttt{nby}''
+      reasonably low but allowing to solve the dependencies quickly). In the obtained results this value
+      seems to be \texttt{4*nbx} with $4$ threads.
 \end{enumerate}
 \end{document}
