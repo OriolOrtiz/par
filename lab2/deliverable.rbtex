@@ -36,7 +36,8 @@ document "Lab 2: Geometric decomposition – solving the heat equation",
     obtained. Include Paraver timelines in order to support your explanation."
 
     question "In the parallelization of Gauss-Seidel, analyze the impact on the parallel execution time of the
-    block size ``\\texttt{by}'' (or equivalently the number of blocks ``\\texttt{nby}''). For example try with
+    block size ``\\texttt{by}'' (or equivalently the number of blocks ``\\texttt{nby}'')
+    \\footnote{The resulting image should be the same.}. For example try with
     \\texttt{nby=2*nbx, nby=4*nbx, ...} Is there any performance impact? Is there an optimal point?
     Justify your answer."
 
