@@ -1,0 +1,54 @@
+Sequential execution
+Iterations        : 25000
+Resolution        : 256
+Algorithm         : 1 (Gauss-Seidel)
+Num. Heat sources : 2
+   1: (0.00, 0.00) 1.00 2.50 
+   2: (0.50, 1.00) 1.00 2.50 
+Time: 6.340 (9.049 GFlop => 1427.15 MFlop/s)
+Convergence to residual=0.000050: 12552 iterations
+OpenMP execution with 1 threads
+Iterations        : 25000
+Resolution        : 256
+Algorithm         : 1 (Gauss-Seidel)
+Num. Heat sources : 2
+   1: (0.00, 0.00) 1.00 2.50 
+   2: (0.50, 1.00) 1.00 2.50 
+Time: 6.318 (9.049 GFlop => 1432.17 MFlop/s)
+Convergence to residual=0.000050: 12552 iterations
+OpenMP execution with 2 threads
+Iterations        : 25000
+Resolution        : 256
+Algorithm         : 1 (Gauss-Seidel)
+Num. Heat sources : 2
+   1: (0.00, 0.00) 1.00 2.50 
+   2: (0.50, 1.00) 1.00 2.50 
+Time: 4.962 (8.360 GFlop => 1684.74 MFlop/s)
+Convergence to residual=0.000050: 11596 iterations
+OpenMP execution with 4 threads
+Iterations        : 25000
+Resolution        : 256
+Algorithm         : 1 (Gauss-Seidel)
+Num. Heat sources : 2
+   1: (0.00, 0.00) 1.00 2.50 
+   2: (0.50, 1.00) 1.00 2.50 
+Time: 4.342 (8.066 GFlop => 1857.65 MFlop/s)
+Convergence to residual=0.000050: 11189 iterations
+OpenMP execution with 8 threads
+Iterations        : 25000
+Resolution        : 256
+Algorithm         : 1 (Gauss-Seidel)
+Num. Heat sources : 2
+   1: (0.00, 0.00) 1.00 2.50 
+   2: (0.50, 1.00) 1.00 2.50 
+Time: 8.248 (8.066 GFlop => 977.99 MFlop/s)
+Convergence to residual=0.000050: 11189 iterations
+OpenMP execution with 16 threads
+Iterations        : 25000
+Resolution        : 256
+Algorithm         : 1 (Gauss-Seidel)
+Num. Heat sources : 2
+   1: (0.00, 0.00) 1.00 2.50 
+   2: (0.50, 1.00) 1.00 2.50 
+Time: 9.178 (6.635 GFlop => 722.91 MFlop/s)
+Convergence to residual=0.000050: 9204 iterations
