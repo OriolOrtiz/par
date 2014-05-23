@@ -216,18 +216,8 @@ int main(int argc, char **argv) {
 	double init_time = omp_get_wtime();
 #endif
 
-#if _TAREADOR_
-	tareador_start_task("initialize");
-#endif
 	initialize(N, data);
-#if _TAREADOR_
-	tareador_end_task();
-	tareador_start_task("clear");
-#endif
 	clear(N, tmp);
-#if _TAREADOR_
-	tareador_end_task();
-#endif
 
 #if _EXTRAE_
 	Extrae_event(PROGRAM, END);

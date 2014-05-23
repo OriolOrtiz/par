@@ -42,7 +42,6 @@ void merge(long n, T left[n], T right[n], T result[n*2], long start, long length
 #if _EXTRAE_
                 Extrae_event(PROGRAM, END);
 #endif
-		#pragma omp taskwait
         } else {
                 // Recursive decomposition
                 merge(n, left, right, result, start, length/2);
@@ -57,11 +56,14 @@ void multisort(long n, T data[n], T tmp[n]) {
                 multisort(n/4L, &data[n/4L], &tmp[n/4L]);
                 multisort(n/4L, &data[n/2L], &tmp[n/2L]);
                 multisort(n/4L, &data[3L*n/4L], &tmp[3L*n/4L]);
+		#pragma omp taskwait
 
                 merge(n/4L, &data[0], &data[n/4L], &tmp[0], 0, n/2L);
                 merge(n/4L, &data[n/2L], &data[3L*n/4L], &tmp[n/2L], 0, n/2L);
+		#pragma omp taskwait
 
                 merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
+		// We don't need to synchronize this. We are already synchronized.
 	} else {
 		// Base case
 	        #pragma omp task
@@ -72,7 +74,6 @@ void multisort(long n, T data[n], T tmp[n]) {
 #if _EXTRAE_
 		Extrae_event(PROGRAM, END);
 #endif
-		#pragma omp taskwait
 	}
 }
 
