@@ -43,8 +43,11 @@ void merge(long n, T left[n], T right[n], T result[n*2], long start, long length
 #endif
         } else {
                 // Recursive decomposition
+	        #pragma omp task
                 merge(n, left, right, result, start, length/2);
+		#pragma omp task
                 merge(n, left, right, result, start + length/2, length/2);
+		#pragma omp taskwait
         }
 }
 
