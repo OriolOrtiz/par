@@ -71,10 +71,6 @@ void multisort(long n, T data[n], T tmp[n]) {
 		#pragma omp taskwait
 
                 merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
-		// If we explain this in the deliverable, we might get
-		// some extra credit. Assume 4 divisions (1 multisort call).
-		// If 1 is done and 0 is still going, a merge of 2 could be
-		// started.
 		#pragma omp taskwait
 	} else {
 		// Base case

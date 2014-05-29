@@ -1,50 +1,148 @@
 Start Multisort Analsys
 Multisort with 8192 Kelements and sort-merge size = 512 elememts
 Sequential execution
-Initialization time in seconds = 0.218703
-Multisort execution time using randomly generated data = 1.38835
-Multisort execution time using already sorted data = 0.400037
-Multisort execution time using reverse order data = 0.487561
+Initialization time in seconds = 0.213043
+Multisort execution time using randomly generated data = 1.38843
+Multisort execution time using already sorted data = 0.39955
+Multisort execution time using reverse order data = 0.486832
 Multisort program finished
 OpenMP execution with 1 thread
-Initialization time in seconds = 0.212513
-Multisort execution time using randomly generated data = 1.38923
-Multisort execution time using already sorted data = 0.400142
-Multisort execution time using reverse order data = 0.485985
+Initialization time in seconds = 0.212068
+Multisort execution time using randomly generated data = 1.39769
+Multisort execution time using already sorted data = 0.399932
+Multisort execution time using reverse order data = 0.484901
 Multisort program finished
 OpenMP execution with 2 threads
-Initialization time in seconds = 0.210658
-Multisort execution time using randomly generated data = 0.720597
-Multisort execution time using already sorted data = 0.217314
-Multisort execution time using reverse order data = 0.275582
+Initialization time in seconds = 0.212362
+Multisort execution time using randomly generated data = 0.745576
+Multisort execution time using already sorted data = 0.216987
+Multisort execution time using reverse order data = 0.26734
 Multisort program finished
 OpenMP execution with 4 threads
-Initialization time in seconds = 0.216331
-Multisort execution time using randomly generated data = 0.433443
-Multisort execution time using already sorted data = 0.134121
-Multisort execution time using reverse order data = 0.158629
+Initialization time in seconds = 0.215023
+Multisort execution time using randomly generated data = 0.373606
+Multisort execution time using already sorted data = 0.119172
+Multisort execution time using reverse order data = 0.140712
 Multisort program finished
 OpenMP execution with 6 threads
-Initialization time in seconds = 0.211929
-Multisort execution time using randomly generated data = 0.419718
-Multisort execution time using already sorted data = 0.132385
-Multisort execution time using reverse order data = 0.15942
+Initialization time in seconds = 0.214334
+Multisort execution time using randomly generated data = 0.36493
+Multisort execution time using already sorted data = 0.115808
+Multisort execution time using reverse order data = 0.145614
 Multisort program finished
 OpenMP execution with 8 threads
-Initialization time in seconds = 0.213613
-Multisort execution time using randomly generated data = 0.436297
-Multisort execution time using already sorted data = 0.137783
-Multisort execution time using reverse order data = 0.167668
+Initialization time in seconds = 0.212141
+Multisort execution time using randomly generated data = 0.3603
+Multisort execution time using already sorted data = 0.118263
+Multisort execution time using reverse order data = 0.148409
 Multisort program finished
 OpenMP execution with 10 threads
-Initialization time in seconds = 0.213819
-Multisort execution time using randomly generated data = 0.432378
-Multisort execution time using already sorted data = 0.142306
-Multisort execution time using reverse order data = 0.169491
+Initialization time in seconds = 0.214596
+Multisort execution time using randomly generated data = 0.370598
+Multisort execution time using already sorted data = 0.124303
+Multisort execution time using reverse order data = 0.152282
 Multisort program finished
 OpenMP execution with 12 threads
-Initialization time in seconds = 0.21429
-Multisort execution time using randomly generated data = 0.432473
-Multisort execution time using already sorted data = 0.14191
-Multisort execution time using reverse order data = 0.167305
+Initialization time in seconds = 0.21247
+Multisort execution time using randomly generated data = 0.378981
+Multisort execution time using already sorted data = 0.125566
+Multisort execution time using reverse order data = 0.155024
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 512 elememts
+Sequential execution
+Initialization time in seconds = 0.424833
+Multisort execution time using randomly generated data = 2.89178
+Multisort execution time using already sorted data = 0.829736
+Multisort execution time using reverse order data = 1.07272
+Multisort program finished
+OpenMP execution with 1 thread
+Initialization time in seconds = 0.422621
+Multisort execution time using randomly generated data = 2.90822
+Multisort execution time using already sorted data = 0.83014
+Multisort execution time using reverse order data = 1.08249
+Multisort program finished
+OpenMP execution with 2 threads
+Initialization time in seconds = 0.42273
+Multisort execution time using randomly generated data = 1.53259
+Multisort execution time using already sorted data = 0.4568
+Multisort execution time using reverse order data = 0.587611
+Multisort program finished
+OpenMP execution with 4 threads
+Initialization time in seconds = 0.428259
+Multisort execution time using randomly generated data = 0.768147
+Multisort execution time using already sorted data = 0.241057
+Multisort execution time using reverse order data = 0.31217
+Multisort program finished
+OpenMP execution with 6 threads
+Initialization time in seconds = 0.427234
+Multisort execution time using randomly generated data = 0.765572
+Multisort execution time using already sorted data = 0.241576
+Multisort execution time using reverse order data = 0.314157
+Multisort program finished
+OpenMP execution with 8 threads
+Initialization time in seconds = 0.426147
+Multisort execution time using randomly generated data = 0.747914
+Multisort execution time using already sorted data = 0.244444
+Multisort execution time using reverse order data = 0.306664
+Multisort program finished
+OpenMP execution with 10 threads
+Initialization time in seconds = 0.421427
+Multisort execution time using randomly generated data = 0.73227
+Multisort execution time using already sorted data = 0.249204
+Multisort execution time using reverse order data = 0.328382
+Multisort program finished
+OpenMP execution with 12 threads
+Initialization time in seconds = 0.423026
+Multisort execution time using randomly generated data = 0.738522
+Multisort execution time using already sorted data = 0.25539
+Multisort execution time using reverse order data = 0.326919
+Multisort program finished
+Multisort with 32768 Kelements and sort-merge size = 512 elememts
+Sequential execution
+Initialization time in seconds = 0.839256
+Multisort execution time using randomly generated data = 5.95531
+Multisort execution time using already sorted data = 1.70331
+Multisort execution time using reverse order data = 2.18281
+Multisort program finished
+OpenMP execution with 1 thread
+Initialization time in seconds = 0.845109
+Multisort execution time using randomly generated data = 5.9957
+Multisort execution time using already sorted data = 1.70368
+Multisort execution time using reverse order data = 2.1795
+Multisort program finished
+OpenMP execution with 2 threads
+Initialization time in seconds = 0.840356
+Multisort execution time using randomly generated data = 3.28259
+Multisort execution time using already sorted data = 0.932549
+Multisort execution time using reverse order data = 1.19731
+Multisort program finished
+OpenMP execution with 4 threads
+Initialization time in seconds = 0.844075
+Multisort execution time using randomly generated data = 1.59298
+Multisort execution time using already sorted data = 0.504787
+Multisort execution time using reverse order data = 0.633418
+Multisort program finished
+OpenMP execution with 6 threads
+Initialization time in seconds = 0.841866
+Multisort execution time using randomly generated data = 1.5331
+Multisort execution time using already sorted data = 0.509349
+Multisort execution time using reverse order data = 0.638815
+Multisort program finished
+OpenMP execution with 8 threads
+Initialization time in seconds = 0.844287
+Multisort execution time using randomly generated data = 1.50232
+Multisort execution time using already sorted data = 0.517112
+Multisort execution time using reverse order data = 0.654033
+Multisort program finished
+OpenMP execution with 10 threads
+Initialization time in seconds = 0.843457
+Multisort execution time using randomly generated data = 1.48938
+Multisort execution time using already sorted data = 0.533874
+Multisort execution time using reverse order data = 0.648434
+Multisort program finished
+OpenMP execution with 12 threads
+Initialization time in seconds = 0.846683
+Multisort execution time using randomly generated data = 1.53008
+Multisort execution time using already sorted data = 0.548262
+Multisort execution time using reverse order data = 0.671193
 Multisort program finished
