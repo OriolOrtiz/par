@@ -1,0 +1,85 @@
+OpenMP execution with 8 threads
+Multisort with 16384 Kelements and sort-merge size = 1 Kelements
+Initialization time in seconds = 0.421096
+Multisort execution time using randomly generated data = 0.568482
+Multisort execution time using already sorted data = 0.558418
+Multisort execution time using reverse order data = 0.523457
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 2 Kelements
+Initialization time in seconds = 0.428429
+Multisort execution time using randomly generated data = 0.477009
+Multisort execution time using already sorted data = 0.220589
+Multisort execution time using reverse order data = 0.239617
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 4 Kelements
+Initialization time in seconds = 0.425197
+Multisort execution time using randomly generated data = 0.476709
+Multisort execution time using already sorted data = 0.175211
+Multisort execution time using reverse order data = 0.204063
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 8 Kelements
+Initialization time in seconds = 0.423215
+Multisort execution time using randomly generated data = 0.458819
+Multisort execution time using already sorted data = 0.168586
+Multisort execution time using reverse order data = 0.196061
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 16 Kelements
+Initialization time in seconds = 0.423114
+Multisort execution time using randomly generated data = 0.460765
+Multisort execution time using already sorted data = 0.164396
+Multisort execution time using reverse order data = 0.199507
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 32 Kelements
+Initialization time in seconds = 0.42276
+Multisort execution time using randomly generated data = 0.466504
+Multisort execution time using already sorted data = 0.159111
+Multisort execution time using reverse order data = 0.196062
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 64 Kelements
+Initialization time in seconds = 0.421938
+Multisort execution time using randomly generated data = 0.464566
+Multisort execution time using already sorted data = 0.166339
+Multisort execution time using reverse order data = 0.18816
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 128 Kelements
+Initialization time in seconds = 0.425761
+Multisort execution time using randomly generated data = 0.474168
+Multisort execution time using already sorted data = 0.165133
+Multisort execution time using reverse order data = 0.191575
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 256 Kelements
+Initialization time in seconds = 0.427006
+Multisort execution time using randomly generated data = 0.514488
+Multisort execution time using already sorted data = 0.156239
+Multisort execution time using reverse order data = 0.20292
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 512 Kelements
+Initialization time in seconds = 0.422777
+Multisort execution time using randomly generated data = 0.574504
+Multisort execution time using already sorted data = 0.177596
+Multisort execution time using reverse order data = 0.230893
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 1024 Kelements
+Initialization time in seconds = 0.427275
+Multisort execution time using randomly generated data = 0.573606
+Multisort execution time using already sorted data = 0.179318
+Multisort execution time using reverse order data = 0.225792
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 2048 Kelements
+Initialization time in seconds = 0.426101
+Multisort execution time using randomly generated data = 0.76888
+Multisort execution time using already sorted data = 0.242055
+Multisort execution time using reverse order data = 0.32567
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 4096 Kelements
+Initialization time in seconds = 0.422065
+Multisort execution time using randomly generated data = 0.821502
+Multisort execution time using already sorted data = 0.243699
+Multisort execution time using reverse order data = 0.337007
+Multisort program finished
+Multisort with 16384 Kelements and sort-merge size = 8192 Kelements
+Initialization time in seconds = 0.421065
+Multisort execution time using randomly generated data = 3.04508
+Multisort execution time using already sorted data = 0.873573
+Multisort execution time using reverse order data = 1.16356
+Multisort program finished

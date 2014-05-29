@@ -31,7 +31,7 @@ Héctor Ramón Jiménez
 \begin{minipage}{0.4\textwidth}
 \begin{flushright}
 \large
-Alvaro Espuña Buxo
+Alvaro Espuña Buxó
 \end{flushright}
 \end{minipage}
 \vfill
@@ -51,21 +51,109 @@ Alvaro Espuña Buxo
 \textbf{Include the source of the sequential multisort.c code modified
   with the calls to the Tareador API and the task graph generated.}
 
+As we can see in {\tt multisort-tareador.c}, in the {\tt main}
+function we only instrumented the call to \texttt{do\_sort} with
+randomly generated data because it's the only one we care. To increase
+the granularity, and to understand better what's going on with the
+recursive calls we also instrumented {\tt multisort} with appropriate
+names ({\tt multisort-i}, {\tt merge-n-i}, {\tt basicsort}). We did a
+similar thing for merge.
+
+\vspace{0.5cm}
+\begin{figure}[h!]
+  \center
+  \includegraphics[width=1.0\textwidth,trim={2cm 0 0 0},clip]{figs/multisort_tareador.pdf}
+  \caption{Detail of the output of tareador for
+    multisort-tareador. The full graphic is in
+    {\tt multisort\_tareador.pdf}.}
+  \label{fig:multisort-tareador}
+\end{figure}
+\vspace{0.5cm}
+
+From the figure \ref{fig:multisort-tareador} we can see how the {\tt
+  basicsort}s are fully parallelizable. The two merges of size n/4 for
+every call to {\tt multisort} are also mutually parallelizable. They
+only depend on the sorting of the relevant subarray. The call for size n/2 has to wait
+for them though.
+
 \item
   \textbf{Write a table with the execution time and speed-up predicted
     by Dimemas (for 1, 2, 4, 8, 16, 32 and 64 processors) for the task
     decomposition specified with Tareador. Are the results close to the
     ideal case? Reason about your answer.}
+
+\begin{figure}[h!]
+  \center
+\begin{tabular}{| c || c | c |}
+\hline
+\textbf{N} & \textbf{Time (s)} & \textbf{Speedup}
+\\
+\hline
+\hline
+ 1 & 53.843 &     - \\ \hline
+ 2 & 30.379 & 1.772 \\ \hline
+ 4 & 18.592 & 2.895 \\ \hline
+ 8 & 12.701 & 4.239 \\ \hline
+16 & 10.091 & 5.335 \\ \hline
+32 &  8.895 & 6.053 \\ \hline
+64 &  8.326 & 6.467 \\ \hline
+
+\end{tabular}
+\caption{Table for times and speedup as a function of the number of threads (N)}
+\label{fig:speedup-table}
+\end{figure}
+
+In figure \ref{fig:speedup-table} we can see that the scalability
+degrades past 8 threads. This result is expected since due to
+data dependencies, the program is not fully parallelizable (being the
+merging the bottleneck). The critical path for mergesort is {\tt
+  basicsort} $\rightarrow$ {\tt merge n/4} $\rightarrow$ {\tt merge n/2}. We can see in the
+following graphics how the merging is being the bottleneck as we
+increase the number of threads (clearly noticeable with 32 threads) while
+the {\tt basicsort}ing (in pink) is clearly fully parallelizable.
+
+Probably it is more scalable than reported by Dimemas, because Tareador is
+taking into account the initialization of the array, which is sequential.
+
+\vspace{0.5cm}
+\begin{figure}[h!]
+  \center
+  \includegraphics[width=1.0\textwidth]{figs/paraver_2_cores.png}
+  \caption{Dimemas simulation with 2 cores}
+\end{figure}
+
+\vspace{0.5cm}
+\begin{figure}[h!]
+  \center
+  \includegraphics[width=1.0\textwidth]{figs/paraver_8_cores.png}
+  \caption{Dimemas simulation with 8 cores}
+\end{figure}
+
+\vspace{0.5cm}
+\begin{figure}[h!]
+  \center
+  \includegraphics[width=1.0\textwidth]{figs/paraver_32_cores.png}
+  \caption{Dimemas simulation with 32 cores. The red \emph{circle} shows how the
+    merging doesn't scale well (although basicsorting does)}
+\end{figure}
+
 \end{enumerate}
 
+\newpage
 \section{Parallelization with OpenMP}
 \begin{enumerate}
   \setcounter{enumi}{2}
   \item
-    \textbf{ Briefly describe the two versions (Leaf and Tree)
+    \textbf{Briefly describe the two versions (Leaf and Tree)
       implemented, making references to the source code included in
       the compressed tar file.}
+
+\subsection*{Leaf}
+
+\subsection*{Tree}
+
 \end{enumerate}
+
 \section{Performance analysis}
 \textbf{Write a text, inspired in the one provided below, summarizing
   the performance results for the two versions (Leaf and Tree) of
