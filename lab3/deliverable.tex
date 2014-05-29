@@ -148,10 +148,131 @@ taking into account the initialization of the array, which is sequential.
       implemented, making references to the source code included in
       the compressed tar file.}
 
-\subsection*{Leaf}
+    The idea in both versions is to create tasks and add them to a pool,
+    so the threads execute them when they can.
 
-\subsection*{Tree}
+\subsection{Leaf}
+The leaf version creates a task for every base case. We need to
+take care of the syncronization.
 
+\subsubsection{merge}
+We create a task for every {\tt basicmerge}. There's no need of
+synchronization at this level, both merges are totally parallelizable.
+
+\begin{minted}{c}
+void merge(long n, T left[n], T right[n], T result[n*2],
+           long start, long length) {
+    if (length < MIN_MERGE_SIZE*2L) {
+       // Base case
+       #pragma omp task
+       basicmerge(n, left, right, result, start, length);
+    } else {
+       // Recursive decomposition
+       merge(n, left, right, result, start, length/2);
+       merge(n, left, right, result, start + length/2, length/2);
+    }
+}
+\end{minted}
+
+\subsubsection{multisort}
+We create a task for every {\tt basicsort}. Here some synchronization is needed.
+First of all, we cannot start merging until we have the four subparts sorted.
+But every multisort is completely independent from another. Also, as we saw on figure
+\ref{fig:multisort-tareador} the merge of size n/2 depends of the previous merges, thus
+we need to wait after them.
+
+\begin{minted}{c}
+void multisort(long n, T data[n], T tmp[n]) {
+    if (n >= MIN_SORT_SIZE*4L) {
+        // Recursive decomposition
+        multisort(n/4L, &data[0], &tmp[0]);
+        multisort(n/4L, &data[n/4L], &tmp[n/4L]);
+        multisort(n/4L, &data[n/2L], &tmp[n/2L]);
+        multisort(n/4L, &data[3L*n/4L], &tmp[3L*n/4L]);
+        #pragma omp taskwait
+
+        merge(n/4L, &data[0], &data[n/4L], &tmp[0], 0, n/2L);
+        merge(n/4L, &data[n/2L], &data[3L*n/4L], &tmp[n/2L], 0, n/2L);
+	#pragma omp taskwait
+
+        merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
+    } else {
+        #pragma omp task
+        basicsort(n, data);
+    }
+}
+\end{minted}
+
+\subsection{Tree}
+
+In the tree version, we create a task for every inner node. In this version
+two more {\tt taskwaits} are needed.
+
+\subsubsection{merge}
+We create a task for every {\tt merge} call. Notice how the {\tt
+  taskwait} here is needed, otherwise, two new {\tt merge}s on the
+same subpart of the vector could be started.
+
+\begin{minted}{c}
+void merge(long n, T left[n], T right[n], T result[n*2],
+           long start, long length) {
+    if (length < MIN_MERGE_SIZE*2L) {
+        // Base case
+        basicmerge(n, left, right, result, start, length);
+    } else {
+        // Recursive decomposition
+        #pragma omp task
+        merge(n, left, right, result, start, length/2);
+	#pragma omp task
+        merge(n, left, right, result, start + length/2, length/2);
+	#pragma omp taskwait
+    }
+}
+\end{minted}
+
+\subsubsection{multisort}
+We create a task for every {\tt multisort} call. When we are finished
+sorting, (hence the {\tt taskwait} we can start the merging. Now, we
+create a task for every call to {\tt merge} with size n/4. As in the
+leaf case, we need to wait both are merged to start the merging with
+size n/2. Notice how the taskwait is needed after the last merge. To
+understand this, assume 4 divisions (1 multisort call). If 1 is done
+and 0 is still going, a merge of 2 could be started (on the
+\emph{upper} level), but it could produce an incorrect result.
+
+\begin{minted}{c}
+void multisort(long n, T data[n], T tmp[n]) {
+    if (n >= MIN_SORT_SIZE*4L) {
+        // Recursive decomposition
+	#pragma omp task
+        multisort(n/4L, &data[0], &tmp[0]);
+	#pragma omp task
+        multisort(n/4L, &data[n/4L], &tmp[n/4L]);
+	#pragma omp task
+        multisort(n/4L, &data[n/2L], &tmp[n/2L]);
+	#pragma omp task
+        multisort(n/4L, &data[3L*n/4L], &tmp[3L*n/4L]);
+	#pragma omp taskwait
+
+	#pragma omp task
+        merge(n/4L, &data[0], &data[n/4L], &tmp[0], 0, n/2L);
+	#pragma omp task
+        merge(n/4L, &data[n/2L], &data[3L*n/4L], &tmp[n/2L], 0, n/2L);
+	#pragma omp taskwait
+
+        merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
+	#pragma omp taskwait
+    } else {
+        // Base case
+	basicsort(n, data);
+    }
+}
+\end{minted}
+
+It's important to note that both versions are probably not technically
+optimal.  When we are done with the two first multisorts, we could
+start the first merge of size n/4. We avoided this, to benefit from
+the simplicity of this code.
 \end{enumerate}
 
 \section{Performance analysis}
