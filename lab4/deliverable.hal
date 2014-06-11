@@ -1,0 +1,79 @@
+import haltex
+
+documentclass "article", options=>"a4paper,11pt"
+
+usepackage "inputenc", options => "utf8"
+usepackage "graphicx"
+usepackage "caption", options => "justification=centering,labelfont=bf"
+usepackage "hyperref", options => "hidelinks"
+usepackage "amsmath"
+usepackage "minted"
+
+import haltex.utils
+
+document:
+  cover title => "N-Sudoku puzzle",
+    subject => "Parallelism",
+    authors => ["Héctor Ramón Jiménez", "Alvaro Espuña Buxó"],
+    footer => "Facultat d'Informàtica de Barcelona"
+
+  section "Recursive exploration"
+
+  p "The Sudoku exploration is performed recursively. The **base case** occurs when
+  the maximum depth is reached ($size^3$) or, in other words,
+  the number of empty cells is 0, then a solution is found."
+
+  p "When the base case does not occur, the recursion works as it follows:"
+
+  enumerate:
+    item; p "If the current cell has a number (provided by the initial puzzle) then
+    it continues to the next cell recursively."
+    item; p "For each possible valid number (*guess*) that can be placed in the current cell:"
+    enumerate:
+      item; p "Assign the *guess* to the current cell."
+      item; p "Check if there is a solution, advancing to the next cell recursively."
+
+  p "Notice that the current solution is discarded if there are no valid *guesses*."
+
+  clearpage
+
+  section "Task descomposition"
+
+  p "Task..."
+
+  figure options => "h!":
+    center:
+      includegraphics "dependency_graph.pdf", options => "height=1.0\\textheight"
+      caption "The dependency graph results to be parallelizable"
+
+  clearpage
+
+  section "Parallelization"
+
+  p "As explained before, in order to make the code parallelizable it is necessary to
+  remove the dependencies with |first\\_solution|, |num\\_solutions| and |g| variables."
+
+  br
+
+  itemize:
+    item; p "The |first\\_solution| variable can be left without any particular control. It
+    really does not matter if race conditions occur, because it is only updated when a solution is found
+    and at the end we are going to show a valid solution."
+    item; p "The |num\\_solutions| variable is a counter only updated when the **base case**
+    occurs, thus it is possible to get rid of the **race conditions** updating it in an **atomic**
+    operation."
+
+    figure options => "h!":
+      inputminted "c", "sudoku-omp.c", options => "firstline=30, lastline=39"
+      caption pstyle "Updating |num\\_solutions| atomically"
+
+    clearpage
+
+    item; p "The |g| variable contains the current grid with the partial solution. In order to avoid
+    concurrent modification of this data, it is necessary to perform a copy using the |new\\_grid| function
+    before creating the task. Also, it is necessary to make the |solved| variable shared because tasks will
+    update its value when a solution is found recursively."
+
+  figure options => "h!":
+    inputminted "c", "sudoku-omp.c", options => "firstline=51, lastline=77"
+    caption pstyle "Task creation. Copying the current grid |g| into |ng|"
