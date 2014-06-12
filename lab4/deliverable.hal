@@ -13,7 +13,7 @@ import haltex.utils
 
 document:
   cover title => "N-Sudoku puzzle",
-    subject => "Parallelism",
+    subject => "Parallelism$_{1202}$",
     authors => ["Héctor Ramón Jiménez", "Alvaro Espuña Buxó"],
     footer => "Facultat d'Informàtica de Barcelona"
 
