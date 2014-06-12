@@ -37,7 +37,7 @@ document:
   p "Notice that the current solution is discarded if there are no valid *guesses*."
 
   subsection "Implementation"
-  p "The function |solve| receives three paramters:"
+  p "The function |solve| receives three parameters:"
 
   enumerate:
     item; p "|size| $\\rightarrow$ Integer representing the size of the puzzle"
@@ -52,14 +52,27 @@ document:
 
   clearpage
 
-  section "Task descomposition"
+  section "Task decomposition"
 
-  p "Task..."
+  p "Analyzing the task decomposition of the original code with |Tareador| we obtain this
+  dependency graph:"
+
+  br 4
+
+  figure options => "h!":
+    center:
+      includegraphics "dependency_graph_old.pdf", options => "height=0.5\\textheight"
+      caption "The data dependencies make the parallelization difficult"
+
+  br 
+  p "The variables that cause this sequential dependency graph are |num\\_solutions|, |first\\_solution| and |g|.
+  If we ignore this variables we can get a parallelizable dependency graph, as shown in **Figure \\ref{pdg}**."
 
   figure options => "h!":
     center:
       includegraphics "dependency_graph.pdf", options => "height=1.0\\textheight"
-      caption "The dependency graph results to be parallelizable"
+      caption "The final dependency graph results to be parallelizable"
+      label "pdg"
 
   clearpage
 
