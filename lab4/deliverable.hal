@@ -17,6 +17,9 @@ document:
     authors => ["Héctor Ramón Jiménez", "Alvaro Espuña Buxó"],
     footer => "Facultat d'Informàtica de Barcelona"
 
+  tableofcontents
+  clearpage
+
   section "Recursive exploration"
 
   subsection "Algorithm"
@@ -37,14 +40,14 @@ document:
   p "Notice that the current solution is discarded if there are no valid *guesses*."
 
   subsection "Implementation"
-  p "The function |solve| receives three parameters:"
+  p "The function |solve| receives three **parameters**:"
 
   enumerate:
     item; p "|size| $\\rightarrow$ Integer representing the size of the puzzle"
     item; p "|g| $\\rightarrow$ Pointer to the start of an array of integers representing the sudoku grid"
     item; p "|loc| $\\rightarrow$ Integer that marks the current cell in the grid"
 
-  p "And uses two global variables:"
+  p "And uses two **global variables**:"
 
   enumerate:
     item; p "|first\\_solution| $\\rightarrow$ Points to the grid of the first solution found"
@@ -78,6 +81,7 @@ document:
 
   section "Parallelization"
 
+  subsection "Handling dependencies"
   p "As explained before, in order to make the code parallelizable it is necessary to
   remove the dependencies with |first\\_solution|, |num\\_solutions| and |g| variables."
 
@@ -105,3 +109,20 @@ document:
   figure options => "h!":
     inputminted "c", "sudoku-omp.c", options => "firstline=51, lastline=77"
     caption pstyle "Task creation. Copying the current grid |g| into |ng|"
+
+  clearpage
+
+  subsection "Controlling the number of tasks"
+  p "The number of created tasks grows **exponentially** as the recursive exploration goes deeper. Thus it
+  is needed some control to avoid the **overhead** caused by the creation of a huge number of tasks."
+
+  figure options => "h!":
+    inputminted "c", "sudoku-omp.c", options => "firstline=50, lastline=85"
+    caption pstyle "The current cell |loc| is the current level of the exploration."
+    label "tasks"
+
+  br
+
+  p "The idea is to decide **experimentally** a **maximum level**. Once the current level surpasses
+  the maximum level no more tasks are created and the recursive exploration of the current branch is done in
+  the current task, as shown in **Figure \\ref{tasks}**."
