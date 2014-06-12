@@ -19,6 +19,7 @@ document:
 
   section "Recursive exploration"
 
+  subsection "Algorithm"
   p "The Sudoku exploration is performed recursively. The **base case** occurs when
   the maximum depth is reached ($size^3$) or, in other words,
   the number of empty cells is 0, then a solution is found."
@@ -34,6 +35,20 @@ document:
       item; p "Check if there is a solution, advancing to the next cell recursively."
 
   p "Notice that the current solution is discarded if there are no valid *guesses*."
+
+  subsection "Implementation"
+  p "The function |solve| receives three paramters:"
+
+  enumerate:
+    item; p "|size| $\\rightarrow$ Integer representing the size of the puzzle"
+    item; p "|g| $\\rightarrow$ Pointer to the start of an array of integers representing the sudoku grid"
+    item; p "|loc| $\\rightarrow$ Integer that marks the current cell in the grid"
+
+  p "And uses two global variables:"
+
+  enumerate:
+    item; p "|first\\_solution| $\\rightarrow$ Points to the grid of the first solution found"
+    item; p "|num\\_solutions| $\\rightarrow$ Counter that holds the number of the solutions found"
 
   clearpage
 
