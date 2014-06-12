@@ -15,7 +15,7 @@
 #define END             0
 #endif
 
-#define MAX_LEVEL 5
+int MAX_LEVEL = 13;
 
 unsigned long num_solutions = 0;
 int* first_solution = NULL;
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
    int solved; // variable used to indicate if solution to puzzle has been found
    int size;   // number of elements in square (usually 3 for a 3 x 3 x 3 x 3 puzzle))
 
-   if (argc != 2) {
+   if (argc < 2) {
    	fprintf(stderr, "Usage: %s <puzzle_filename> \n", argv[0]);
    	return(0);
    }
@@ -102,6 +102,10 @@ int main(int argc, char **argv) {
       printf("Error: Failed to open file with initial puzzle\n");
       return(0);
       }
+
+   if (argc == 3) {
+      MAX_LEVEL = atoi(argv[2]);
+   }
 
 #if _EXTRAE_
    Extrae_init();
