@@ -118,7 +118,7 @@ document:
 
   figure options => "h!":
     inputminted "c", "sudoku-omp.c", options => "firstline=50, lastline=85"
-    caption pstyle "The current cell |loc| is the current level of the exploration."
+    caption pstyle "The current cell |loc| is the current level of the exploration"
     label "tasks"
 
   br
