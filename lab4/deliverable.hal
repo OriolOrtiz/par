@@ -128,7 +128,7 @@ document:
   the current task, as shown in **Figure \\ref{tasks}**."
 
   subsection "Differences with the sequential version"
-  p "The recursive exploration performed in the parallel version is not performed in **any particular order**.
+  p "The recursive exploration in the parallel version is not performed in **any particular order**.
   This means that the solution proposed by the parallel version **can be different** from the one proposed by
   the sequential version. However, the **total number of solutions must remain the same** because the exploration
   is performed entirely in both versions."
