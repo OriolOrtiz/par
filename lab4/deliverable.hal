@@ -24,7 +24,7 @@ document:
 
   subsection "Algorithm"
   p "The Sudoku exploration is performed recursively. The **base case** occurs when
-  the maximum depth is reached ($size^3$) or, in other words,
+  the maximum depth is reached ($size^4$) or, in other words,
   the number of empty cells is 0, then a solution is found."
 
   p "When the base case does not occur, the recursion works as it follows:"
@@ -133,9 +133,13 @@ document:
   the sequential version. However, the **total number of solutions must remain the same** because the exploration
   is performed entirely in both versions."
 
+  p "The execution time depends on the |size| of the puzzle and also on the *degree of freedom* of the puzzle (the number of possible solutions). If we feed an already solved puzzle, no matter which size, it will just need to scan the grid to find that there are no zeros."
+
+
   section "Execution time and speed-up"
 
-  p "First of all, we needed to study which was the best |MAX\\_LEVEL|
+
+  p "To perform timing, first of all, we needed to study which was the best |MAX\\_LEVEL|
   at which we stoped the creation of new tasks. To find a good
   threshold we modified the main so it receives a new argument"
 
@@ -203,3 +207,13 @@ seems a reasonable intermediate."
  10 & 1.497619 & 5.952 \\\\ \\hline
  12 & 1.303724 & 6.838 \\\\ \\hline"
          caption "Speed-up when using multiple threads."
+
+  p "Analyzing the results we come to the conclusion that our solution
+  scales pretty well, but degrades a bit as the number of threads
+  grows (the slope abruptly changes with 2 and 8 threads). Using
+  *Tareador* at the begining we saw it could be parallelized this
+  well."
+
+  br
+
+  p "The speed-up for 12 threads is remarkably significant (almost a 7x)."
