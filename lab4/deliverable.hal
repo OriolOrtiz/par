@@ -130,14 +130,20 @@ document:
   subsection "Differences with the sequential version"
   p "The recursive exploration in the parallel version is not performed in **any particular order**.
   This means that the solution proposed by the parallel version **can be different** from the one proposed by
-  the sequential version. However, the **total number of solutions must remain the same** because the exploration
+  the sequential version. Furthermore, two executions with the same puzzle and with the same number of threads
+  of the parallel version can produce two different outputs because the tasks are created **dynamically**.
+  However, the **total number of solutions must remain the same** because the exploration
   is performed entirely in both versions."
 
-  p "The execution time depends on the |size| of the puzzle and also on the *degree of freedom* of the puzzle (the number of possible solutions). If we feed an already solved puzzle, no matter which size, it will just need to scan the grid to find that there are no zeros."
-
+  clearpage
 
   section "Execution time and speed-up"
 
+  p "The execution time depends on the |size| of the puzzle and also on the *degree of freedom* of the puzzle
+  (the number of possible solutions). If we feed an already solved puzzle, no matter which size, it will just
+  need to scan the grid to find that there are no zeros."
+
+  br
 
   p "To perform timing, first of all, we needed to study which was the best |MAX\\_LEVEL|
   at which we stoped the creation of new tasks. To find a good
@@ -151,7 +157,7 @@ document:
     inputminted "c", "sudoku-omp.c", options => "firstline=95, lastline=98"
     p "|...|"
     inputminted "c", "sudoku-omp.c", options => "firstline=106, lastline=108"
-    caption pstyle "We added an optional second argument to allow |MAX\\_LEVEL| to be set on runtime."
+    caption pstyle "We added an optional second argument to allow |MAX\\_LEVEL| to be set on runtime"
     label "main-mod"
 
   clearpage
@@ -166,7 +172,7 @@ seems a reasonable intermediate."
     label "script"
 
   br "1"
-  p "The obtained results from this script are shown in figures \\ref{level5} and \\ref{level}."
+  p "The obtained results from this script are shown in **Figures \\ref{level5} and \\ref{level}**."
 
   figure options => "h!":
     center:
@@ -180,20 +186,23 @@ seems a reasonable intermediate."
       caption pstyle "Detail of the relevant region. We can see how the minimum is reached with |MAX\\LEVEL| being 13"
       label "level"
 
-  br "0.5"
-  p "In figure \\ref{times} we show the obtained times using this |MAX\\_LEVEL| 13, and run
+  br 0.5
+
+  p "In **Figure \\ref{times}** we show the obtained times using this |MAX\\_LEVEL| 13, and run
   |submit-omp.sh| from 1 to 12 threads."
 
   figure options => "h!":
     center:
       includegraphics "times.pdf", options => "width=1.0\\textwidth"
-      caption pstyle "Time as a function of the number of threads. |MAX\\_LEVEL| used: 13."
+      caption pstyle "Time as a function of the number of threads. |MAX\\_LEVEL| used: 13"
       label "times"
 
-  p "Table in figure 11 shows the speedup obtained with the parallel
-  version when running in multiple threads"
+  br 0.5
 
-  figure :
+  p "The table in **Figure 11** shows the speedup obtained with the parallel
+  version when running in multiple threads."
+
+  figure options => "h!":
       center:
          tabular "| c | c | c |":
             p "
@@ -206,14 +215,11 @@ seems a reasonable intermediate."
   8 & 1.743077 & 5.114 \\\\ \\hline
  10 & 1.497619 & 5.952 \\\\ \\hline
  12 & 1.303724 & 6.838 \\\\ \\hline"
-         caption "Speed-up when using multiple threads."
+         caption "Speed-up when using multiple threads"
 
   p "Analyzing the results we come to the conclusion that our solution
-  scales pretty well, but degrades a bit as the number of threads
-  grows (the slope abruptly changes with 2 and 8 threads). Using
-  *Tareador* at the begining we saw it could be parallelized this
-  well."
+  **scales** pretty well, as we have already predicted using |Tareador| at the beginning."
 
   br
 
-  p "The speed-up for 12 threads is remarkably significant (almost a 7x)."
+  p "The speed-up for 12 threads is remarkably significant (almost a **7x**)."
