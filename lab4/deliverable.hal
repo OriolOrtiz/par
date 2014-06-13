@@ -67,7 +67,7 @@ document:
       includegraphics "dependency_graph_old.pdf", options => "height=0.5\\textheight"
       caption "The data dependencies make the parallelization difficult"
 
-  br 
+  br
   p "The variables that cause this sequential dependency graph are |num\\_solutions|, |first\\_solution| and |g|.
   If we ignore this variables we can get a parallelizable dependency graph, as shown in **Figure \\ref{pdg}**."
 
@@ -132,3 +132,74 @@ document:
   This means that the solution proposed by the parallel version **can be different** from the one proposed by
   the sequential version. However, the **total number of solutions must remain the same** because the exploration
   is performed entirely in both versions."
+
+  section "Execution time and speed-up"
+
+  p "First of all, we needed to study which was the best |MAX\\_LEVEL|
+  at which we stoped the creation of new tasks. To find a good
+  threshold we modified the main so it receives a new argument"
+
+  figure options => "h!":
+    inputminted "c", "sudoku-omp.c", options => "firstline=18, lastline=18"
+    p "|...|"
+    inputminted "c", "sudoku-omp.c", options => "firstline=91, lastline=91"
+    p "|...|"
+    inputminted "c", "sudoku-omp.c", options => "firstline=95, lastline=98"
+    p "|...|"
+    inputminted "c", "sudoku-omp.c", options => "firstline=106, lastline=108"
+    caption pstyle "We added an optional second argument to allow |MAX\\_LEVEL| to be set on runtime."
+    label "main-mod"
+
+  clearpage
+
+  p "Now, using the script of figure \\ref{script} we can find
+which |MAX\\_LEVEL| takes the minimum time. We use 8 threads since it
+seems a reasonable intermediate."
+
+  figure options => "h!":
+    inputminted "sh", "submit-omp-level.sh", options => "firstline=7, lastline=24"
+    caption pstyle "Script to find optimal |MAX\\_LEVEL| for 8 threads"
+    label "script"
+
+  br "1"
+  p "The obtained results from this script are shown in figures \\ref{level5} and \\ref{level}."
+
+  figure options => "h!":
+    center:
+      includegraphics "level5.pdf", options => "width=1.0\\textwidth"
+      caption pstyle "Here we can observe the overhead as a result of |MAX\\_LEVEL| being too large"
+      label "level5"
+
+  figure options => "h!":
+    center:
+      includegraphics "level.pdf", options => "width=1.0\\textwidth"
+      caption pstyle "Detail of the relevant region. We can see how the minimum is reached with |MAX\\LEVEL| being 13"
+      label "level"
+
+  br "0.5"
+  p "In figure \\ref{times} we show the obtained times using this |MAX\\_LEVEL| 13, and run
+  |submit-omp.sh| from 1 to 12 threads."
+
+  figure options => "h!":
+    center:
+      includegraphics "times.pdf", options => "width=1.0\\textwidth"
+      caption pstyle "Time as a function of the number of threads. |MAX\\_LEVEL| used: 13."
+      label "times"
+
+  p "Table in figure 11 shows the speedup obtained with the parallel
+  version when running in multiple threads"
+
+  figure :
+      center:
+         tabular "| c | c | c |":
+            p "
+\\hline
+  *N threads* & *Time (s)* & *Speed-up* \\\\ \\hline \\hline
+  1 & 8.914889 &     1 \\\\ \\hline
+  2 & 4.651986 & 1.916 \\\\ \\hline
+  4 & 3.460134 & 2.576 \\\\ \\hline
+  6 & 2.261339 & 3.942 \\\\ \\hline
+  8 & 1.743077 & 5.114 \\\\ \\hline
+ 10 & 1.497619 & 5.952 \\\\ \\hline
+ 12 & 1.303724 & 6.838 \\\\ \\hline"
+         caption "Speed-up when using multiple threads."
